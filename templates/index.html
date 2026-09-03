@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SPO x SNOW Incident Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="shell">
+        <header class="hero">
+            <div class="eyebrow">Incident intelligence</div>
+            <h1>SPO x SNOW<br><em>match overzicht</em></h1>
+            <p>Combineer projectinformatie uit SPO met de bijbehorende ServiceNow-incidenten.</p>
+        </header>
+
+        <details class="upload-panel" {% if not matches %}open{% endif %}>
+            <summary class="section-heading">
+                <div>
+                    <span class="section-kicker">01 / bronbestanden</span>
+                    <h2 id="upload-title">Laad je exports in</h2>
+                </div>
+                <span class="summary-action">
+                    <span class="format-badge">CSV only</span>
+                    <span class="collapse-label">Bestanden wijzigen</span>
+                    <span class="collapse-icon" aria-hidden="true">⌄</span>
+                </span>
+            </summary>
+            <div class="upload-content">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="upload-grid">
+                        <label class="file-card" for="spo_file">
+                            <span class="file-topline"><span class="file-mark spo-mark">S</span><span class="file-label">SPO</span><span class="upload-status status-{{ spo_status }}" aria-label="SPO {{ spo_status }}">{{ '✓' if spo_status == 'success' else '×' if spo_status == 'error' else '•' }}</span></span>
+                            <strong id="spo_file-name">{{ spo_name or '-' }}</strong>
+                            <span class="file-hint">Leidend veld: Issuecode</span>
+                            <span class="choose">Bestand kiezen <span aria-hidden="true">↗</span></span>
+                            <input id="spo_file" name="spo_file" type="file" accept=".csv,text/csv" required>
+                        </label>
+                        <label class="file-card" for="snow_file">
+                            <span class="file-topline"><span class="file-mark snow-mark">N</span><span class="file-label">SNOW</span><span class="upload-status status-{{ snow_status }}" aria-label="SNOW {{ snow_status }}">{{ '✓' if snow_status == 'success' else '×' if snow_status == 'error' else '•' }}</span></span>
+                            <strong id="snow_file-name">{{ snow_name or '-' }}</strong>
+                            <span class="file-hint">Matchveld: short_description</span>
+                            <span class="choose">Bestand kiezen <span aria-hidden="true">↗</span></span>
+                            <input id="snow_file" name="snow_file" type="file" accept=".csv,text/csv" required>
+                        </label>
+                    </div>
+                    <div class="form-footer">
+                        <span id="file-status">Nog geen bestanden geselecteerd</span>
+                        <button type="submit">Toon matches <span aria-hidden="true">→</span></button>
+                    </div>
+                </form>
+                {% if error %}<div class="alert" role="alert">{{ error }}</div>{% endif %}
+                {% if info %}<div class="alert alert-info" role="status">{{ info }}</div>{% endif %}
+            </div>
+        </details>
+
+        <section class="results" aria-labelledby="results-title">
+            <div class="results-heading">
+                <div>
+                    <span class="section-kicker">02 / resultaat</span>
+                    <h2 id="results-title">Gevonden incidenten</h2>
+                </div>
+                {% if matches %}<div class="result-count"><strong>{{ matches|length }}</strong> matches</div>{% endif %}
+            </div>
+            {% if matches %}
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SPO nummer</th>
+                            <th>SNOW nummer</th>
+                            <th>SPO prioriteit</th>
+                            <th>TU prioriteit</th>
+                            <th>Samenvatting</th>
+                            <th>Behandelaar</th>
+                            <th>SPO aangemaakt</th>
+                            <th>SPO bijgewerkt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for match in matches %}
+                        <tr>
+                            <td><span class="issue-code">{{ match.issue_code }}</span></td>
+                            <td>{{ match.snow_number or '—' }}</td>
+                            <td><span class="priority priority-{{ match.spo_priority|lower|replace(' ', '-') }}">{{ match.spo_priority or '—' }}</span></td>
+                            <td>{{ match.snow_priority or '—' }}</td>
+                            <td class="summary">{{ match.summary or '—' }}</td>
+                            <td>{{ match.developer or '—' }}</td>
+                            <td>{{ match.created or '—' }}</td>
+                            <td>{{ match.updated or '—' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <span class="empty-icon">+</span>
+                <h3>{{ 'Geen matches gevonden' if info else 'Je overzicht wacht op data' }}</h3>
+                <p>{{ 'Controleer of Issuecode en short_description dezelfde SPO-code bevatten.' if info else 'Upload beide CSV-bestanden hierboven om overeenkomende SPO-nummers te zien.' }}</p>
+            </div>
+            {% endif %}
+        </section>
+        <footer><span>SPO x SNOW</span><span>Matcht op Issuecode → short_description</span></footer>
+    </main>
+    <script>
+        const inputs = [...document.querySelectorAll('input[type="file"]')];
+        const status = document.querySelector('#file-status');
+        inputs.forEach(input => input.addEventListener('change', () => {
+            const selected = inputs.filter(item => item.files.length).length;
+            status.textContent = `${selected} van 2 bestanden geselecteerd`;
+            const fileName = document.querySelector(`#${input.id}-name`);
+            if (fileName && input.files[0]) {
+                fileName.textContent = input.files[0].name;
+            }
+        }));
+    </script>
+</body>
+</html>

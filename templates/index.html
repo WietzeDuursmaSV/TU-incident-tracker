@@ -67,14 +67,14 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>SPO nummer</th>
-                            <th>SNOW nummer</th>
-                            <th>SPO prioriteit</th>
-                            <th>TU prioriteit</th>
-                            <th>Samenvatting</th>
-                            <th>Behandelaar</th>
-                            <th>SPO aangemaakt</th>
-                            <th>SPO bijgewerkt</th>
+                            <th><button class="sort-button" type="button" data-column="0" aria-label="Sorteer op SPO nummer">SPO nummer <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="1" aria-label="Sorteer op SNOW nummer">SNOW nummer <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="2" aria-label="Sorteer op SPO prioriteit">SPO prioriteit <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="3" aria-label="Sorteer op TU prioriteit">TU prioriteit <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="4" aria-label="Sorteer op samenvatting">Samenvatting <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="5" aria-label="Sorteer op behandelaar">Behandelaar <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op SPO aangemaakt">SPO aangemaakt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -113,6 +113,60 @@
             if (fileName && input.files[0]) {
                 fileName.textContent = input.files[0].name;
             }
+        }));
+
+        const table = document.querySelector('.table-wrap table');
+        const sortableHeaders = [...document.querySelectorAll('.sort-button')];
+        const missingValue = '—';
+
+        function sortValue(value) {
+            const normalized = value.trim();
+            if (!normalized || normalized === missingValue) return { type: 'empty', value: '' };
+
+            const date = normalized.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})(?:\s+(\d{1,2}):(\d{2}))?/);
+            if (date) {
+                return {
+                    type: 'date',
+                    value: new Date(
+                        Number(date[3]), Number(date[2]) - 1, Number(date[1]),
+                        Number(date[4] || 0), Number(date[5] || 0)
+                    ).getTime()
+                };
+            }
+
+            const priority = normalized.match(/^(\d+)/);
+            if (priority) return { type: 'number', value: Number(priority[1]) };
+
+            return { type: 'text', value: normalized.toLocaleLowerCase('nl') };
+        }
+
+        sortableHeaders.forEach(header => header.addEventListener('click', () => {
+            const column = Number(header.dataset.column);
+            const currentDirection = header.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
+            const directionMultiplier = currentDirection === 'ascending' ? 1 : -1;
+            const rows = [...table.tBodies[0].rows];
+
+            rows.sort((leftRow, rightRow) => {
+                const leftValue = sortValue(leftRow.cells[column].textContent);
+                const rightValue = sortValue(rightRow.cells[column].textContent);
+                if (leftValue.type === 'empty' && rightValue.type !== 'empty') return 1;
+                if (rightValue.type === 'empty' && leftValue.type !== 'empty') return -1;
+                if (
+                    (leftValue.type === 'number' && rightValue.type === 'number') ||
+                    (leftValue.type === 'date' && rightValue.type === 'date')
+                ) {
+                    return (leftValue.value - rightValue.value) * directionMultiplier;
+                }
+                return String(leftValue.value).localeCompare(String(rightValue.value), 'nl') * directionMultiplier;
+            });
+
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+            sortableHeaders.forEach(otherHeader => {
+                otherHeader.removeAttribute('aria-sort');
+                otherHeader.querySelector('.sort-indicator').textContent = '↕';
+            });
+            header.setAttribute('aria-sort', currentDirection);
+            header.querySelector('.sort-indicator').textContent = currentDirection === 'ascending' ? '↑' : '↓';
         }));
     </script>
 </body>

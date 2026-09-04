@@ -4,6 +4,7 @@ import csv
 import io
 import os
 import re
+from datetime import date, datetime
 from typing import Any
 
 from flask import Flask, render_template, request
@@ -13,6 +14,37 @@ app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 25 * 1024 * 1024
 
 ISSUE_CODE_PATTERN = re.compile(r"\bSPO-\d+\b", re.IGNORECASE)
+SLO_DAYS_BY_PRIORITY = {
+    "highest": 1,
+    "high": 30,
+    "medium": 45,
+    "low": 90,
+}
+
+
+def parse_record_date(value: Any) -> date | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+
+    # Try the most common CSV export formats from SPO/SNOW first.
+    formats = (
+        "%Y-%m-%d",
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%d %H:%M",
+        "%Y-%m-%dT%H:%M:%S",
+        "%d-%m-%Y",
+        "%d-%m-%Y %H:%M",
+        "%d/%m/%Y",
+        "%d/%m/%Y %H:%M",
+    )
+
+    for fmt in formats:
+        try:
+            return datetime.strptime(raw, fmt).date()
+        except ValueError:
+            continue
+    return None
 
 
 def load_records(upload: Any) -> list[dict[str, Any]]:
@@ -35,6 +67,7 @@ def normalize_issue_code(value: Any) -> str:
 
 
 def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    today = date.today()
     snow_by_issue_code: dict[str, dict[str, Any]] = {}
     for snow_record in snow_records:
         match = ISSUE_CODE_PATTERN.search(str(snow_record.get("short_description", "")))
@@ -45,14 +78,34 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
     for spo_record in spo_records:
         issue_code = normalize_issue_code(spo_record.get("Issuecode"))
         snow_record = snow_by_issue_code.get(issue_code)
+        spo_priority = str(spo_record.get("Prioriteit", "")).strip()
+        slo_days = SLO_DAYS_BY_PRIORITY.get(spo_priority.lower())
+        created_date = parse_record_date(spo_record.get("Aangemaakt"))
+        created_days = max((today - created_date).days, 0) if created_date else None
+        if created_days is not None and slo_days:
+            progress_value = (created_days / slo_days) * 100
+            progress_percentage = min(int(progress_value), 100)
+            within_slo = created_days <= slo_days
+            slo_color_class = "is-green" if within_slo else "is-red"
+        else:
+            progress_value = None
+            progress_percentage = None
+            within_slo = None
+            slo_color_class = ""
         if not issue_code or not snow_record:
             continue
         matches.append(
             {
                 "issue_code": issue_code,
-                "spo_priority": spo_record.get("Prioriteit", ""),
+                "spo_priority": spo_priority,
                 "summary": spo_record.get("Samenvatting", ""),
                 "created": spo_record.get("Aangemaakt", ""),
+                "created_days": created_days,
+                "slo_days": slo_days,
+                "slo_progress_percentage": progress_percentage,
+                "slo_progress_value": progress_value,
+                "slo_within_target": within_slo,
+                "slo_color_class": slo_color_class,
                 "updated": spo_record.get("Bijgewerkt", ""),
                 "developer": spo_record.get("Ontwikkelaar", ""),
                 "snow_priority": snow_record.get("priority", ""),
@@ -135,6 +188,6 @@ def index():
 if __name__ == "__main__":
     app.run(
         debug=False,
-        host="localhost",
-        port=int(os.environ.get("PORT", "5000")),
+        host=os.environ.get("HOST", "0.0.0.0"),
+        port=int(os.environ.get("PORT", "5001")),
     )

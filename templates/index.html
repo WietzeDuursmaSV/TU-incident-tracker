@@ -73,8 +73,10 @@
                             <th><button class="sort-button" type="button" data-column="3" aria-label="Sorteer op TU prioriteit">TU prioriteit <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="4" aria-label="Sorteer op samenvatting">Samenvatting <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="5" aria-label="Sorteer op behandelaar">Behandelaar <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op SPO aangemaakt">SPO aangemaakt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op SPO aangemaakt">Datum <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                          
+                            <th><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SLO voortgang">SLO voortgang <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="8" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,6 +89,19 @@
                             <td class="summary">{{ match.summary or '—' }}</td>
                             <td>{{ match.developer or '—' }}</td>
                             <td>{{ match.created or '—' }}</td>
+                            
+                            <td data-sort="{{ match.slo_progress_value if match.slo_progress_value is not none else '' }}">
+                                {% if match.created_days is not none and match.slo_days %}
+                                <div class="slo-progress" role="img" aria-label="{{ match.created_days }} van {{ match.slo_days }} dagen">
+                                    <div class="slo-track">
+                                        <div class="slo-fill" data-progress="{{ match.slo_progress_percentage }}" data-within-slo="{{ '1' if match.slo_within_target else '0' }}"></div>
+                                    </div>
+                                    <span class="slo-label">{{ match.created_days }} / {{ match.slo_days }} dagen</span>
+                                </div>
+                                {% else %}
+                                —
+                                {% endif %}
+                            </td>
                             <td>{{ match.updated or '—' }}</td>
                         </tr>
                     {% endfor %}
@@ -119,9 +134,21 @@
         const sortableHeaders = [...document.querySelectorAll('.sort-button')];
         const missingValue = '—';
 
+        document.querySelectorAll('.slo-fill[data-progress]').forEach(fill => {
+            const rawProgress = Number(fill.dataset.progress || 0);
+            const progress = Math.max(0, Math.min(rawProgress, 100));
+            fill.style.width = `${progress}%`;
+            fill.classList.add(fill.dataset.withinSlo === '1' ? 'is-green' : 'is-red');
+        });
+
         function sortValue(value) {
             const normalized = value.trim();
             if (!normalized || normalized === missingValue) return { type: 'empty', value: '' };
+
+            const decimalNumber = normalized.match(/^-?\d+(?:[.,]\d+)?$/);
+            if (decimalNumber) {
+                return { type: 'number', value: Number(normalized.replace(',', '.')) };
+            }
 
             const date = normalized.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})(?:\s+(\d{1,2}):(\d{2}))?/);
             if (date) {
@@ -147,8 +174,12 @@
             const rows = [...table.tBodies[0].rows];
 
             rows.sort((leftRow, rightRow) => {
-                const leftValue = sortValue(leftRow.cells[column].textContent);
-                const rightValue = sortValue(rightRow.cells[column].textContent);
+                const leftCell = leftRow.cells[column];
+                const rightCell = rightRow.cells[column];
+                const leftSource = leftCell.dataset.sort || leftCell.textContent;
+                const rightSource = rightCell.dataset.sort || rightCell.textContent;
+                const leftValue = sortValue(leftSource);
+                const rightValue = sortValue(rightSource);
                 if (leftValue.type === 'empty' && rightValue.type !== 'empty') return 1;
                 if (rightValue.type === 'empty' && leftValue.type !== 'empty') return -1;
                 if (

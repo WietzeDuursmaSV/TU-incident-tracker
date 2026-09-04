@@ -24,10 +24,23 @@ Dit commando gebruikt de lokale `.venv`. Als die nog niet bestaat, maakt het com
 
 Je kunt de app ook rechtstreeks met Python starten:
 
+#### Windows (PowerShell)
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+$env:PORT = "5001"
+python app.py
+```
+
+#### macOS/Linux
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+export PORT=5001
 python app.py
 ```
 
@@ -41,8 +54,19 @@ Het `npm run dev`-script sluit eerst bestaande processen op de gekozen poort en 
 
 De virtuele omgeving en dependencies zijn dan al aanwezig. Gebruik alleen:
 
+#### Windows (PowerShell)
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+$env:PORT = "5001"
+python app.py
+```
+
+#### macOS/Linux
+
 ```bash
 source .venv/bin/activate
+export PORT=5001
 python app.py
 ```
 
@@ -51,6 +75,35 @@ Met npm blijft het eenvoudiger:
 ```bash
 npm run dev
 ```
+
+## Deployen op Render
+
+Deze app kan direct als Python Web Service op Render draaien.
+
+### Wat moet anders voor productie
+
+- Gebruik Render als Python-service, niet `npm run dev`.
+- Start de app met `gunicorn`.
+- Laat de app luisteren op `0.0.0.0` en de door Render ingestelde `PORT`.
+
+### Instellingen in Render
+
+Gebruik in het formulier deze waarden:
+
+- **Language:** `Python 3`
+- **Branch:** `main` of de branch die je wilt deployen
+- **Root Directory:** leeg laten
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `gunicorn app:app --bind 0.0.0.0:$PORT`
+
+### Deploy-config in de repo
+
+Er staat ook een Render-configbestand in de repo: `render.yaml`.
+Als je die gebruikt, kan Render de service-instellingen automatisch overnemen.
+
+### Belangrijke opmerking
+
+De app verwerkt uploads direct in het verzoek en slaat ze niet permanent op. Dat is geschikt voor Render. Als je later geuploade bestanden of resultaten wilt bewaren, heb je extra opslag nodig.
 
 ### Virtuele omgeving verlaten
 
@@ -107,4 +160,4 @@ De parser probeert eerst UTF-8 te gebruiken en valt bij oudere Windows-exports t
 - **Geen matches gevonden:** controleer of SPO `Issuecode` bevat en of dezelfde code letterlijk of tussen andere tekst staat in SNOW `short_description`.
 - **Upload mislukt:** controleer of beide bestanden geldige CSV zijn, een headerregel bevatten en komma's, aanhalingstekens en regeleinden correct volgens CSV-regels zijn geescaped.
 - **Pagina kan niet worden geopend:** controleer of de server nog draait en gebruik precies <http://localhost:5001>.
-- **Flask niet gevonden:** activeer eerst de virtuele omgeving met `source .venv/bin/activate` en installeer daarna opnieuw met `pip install -r requirements.txt`.
+- **Flask niet gevonden:** activeer eerst de virtuele omgeving (`.\.venv\Scripts\Activate.ps1` op Windows of `source .venv/bin/activate` op macOS/Linux) en installeer daarna opnieuw met `pip install -r requirements.txt`.

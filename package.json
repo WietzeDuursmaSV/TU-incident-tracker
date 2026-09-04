@@ -4,6 +4,6 @@
   "private": true,
   "description": "Lokale Flask-webapp voor het koppelen van SPO-issues aan SNOW-incidenten.",
   "scripts": {
-    "dev": "PORT=${PORT:-5001}; PIDS=$(lsof -ti tcp:$PORT); if [ -n \"$PIDS\" ]; then kill $PIDS; fi; if [ ! -x .venv/bin/python ]; then python3 -m venv .venv && .venv/bin/pip install -r requirements.txt; fi; PORT=$PORT .venv/bin/python app.py"
+    "dev": "node scripts/dev.js"
   }
 }

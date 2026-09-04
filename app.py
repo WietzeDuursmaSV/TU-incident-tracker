@@ -97,11 +97,12 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
             progress_percentage = None
             within_slo = None
             slo_color_class = ""
-        if not issue_code or not snow_record:
+        if not issue_code:
             continue
         matches.append(
             {
                 "issue_code": issue_code,
+                "has_snow_match": snow_record is not None,
                 "spo_priority": spo_priority,
                 "summary": spo_record.get("Samenvatting", ""),
                 "created": spo_record.get("Aangemaakt", ""),
@@ -114,12 +115,12 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "slo_color_class": slo_color_class,
                 "updated": spo_record.get("Bijgewerkt", ""),
                 "developer": spo_record.get("Ontwikkelaar", ""),
-                "snow_priority": snow_record.get("priority", ""),
-                "snow_summary": snow_record.get("short_description", ""),
-                "snow_created": snow_record.get("sys_created_on", ""),
-                "snow_updated": snow_record.get("sys_updated_on", ""),
-                "snow_assigned_to": snow_record.get("assigned_to", ""),
-                "snow_number": snow_record.get("number", ""),
+                "snow_priority": snow_record.get("priority", "") if snow_record else "",
+                "snow_summary": snow_record.get("short_description", "") if snow_record else "",
+                "snow_created": snow_record.get("sys_created_on", "") if snow_record else "",
+                "snow_updated": snow_record.get("sys_updated_on", "") if snow_record else "",
+                "snow_assigned_to": snow_record.get("assigned_to", "") if snow_record else "",
+                "snow_number": snow_record.get("number", "") if snow_record else "",
             }
         )
     return matches
@@ -188,6 +189,8 @@ def index():
         snow_name=snow_name,
         spo_status="success" if spo_loaded else "error" if request.method == "POST" else "pending",
         snow_status="success" if snow_loaded else "error" if request.method == "POST" else "pending",
+        matched_count=sum(1 for match in matches if match["has_snow_match"]),
+        unmatched_count=sum(1 for match in matches if not match["has_snow_match"]),
     )
 
 

@@ -60,7 +60,15 @@
                     <span class="section-kicker">02 / resultaat</span>
                     <h2 id="results-title">Gevonden incidenten</h2>
                 </div>
-                {% if matches %}<div class="result-count"><strong>{{ matches|length }}</strong> matches</div>{% endif %}
+                {% if matches %}
+                <div class="results-tools">
+                    <div class="result-count"><strong>{{ matches|length }}</strong> Matches</div>
+                    <label class="unmatched-toggle" for="show-unmatched">
+                        <input id="show-unmatched" type="checkbox" {% if unmatched_count == 0 %}checked{% endif %}>
+                        <span>Toon zonder SNOW-match ({{ unmatched_count }})</span>
+                    </label>
+                </div>
+                {% endif %}
             </div>
             {% if matches %}
             <div class="table-wrap">
@@ -69,18 +77,20 @@
                         <tr>
                             <th><button class="sort-button" type="button" data-column="0" aria-label="Sorteer op SPO nummer">SPO <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="1" aria-label="Sorteer op SNOW nummer">SNOW<span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="2" aria-label="Sorteer op SPO prioriteit">SPO prioriteit <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="3" aria-label="Sorteer op TU prioriteit">TU prioriteit <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="4" aria-label="Sorteer op samenvatting">Samenvatting <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="5" aria-label="Sorteer op behandelaar">Behandelaar <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op SPO aangemaakt">Datum <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SLO voortgang">SLO voortgang <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="8" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+      
+                            <th><button class="sort-button" type="button" data-column="3" aria-label="Sorteer op SPO prioriteit">SPO prioriteit <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="4" aria-label="Sorteer op TU prioriteit">TU prioriteit <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="5" aria-label="Sorteer op samenvatting">Samenvatting <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op behandelaar">Behandelaar <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SPO aangemaakt">Datum <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="8" aria-label="Sorteer op SLO voortgang">SLO voortgang <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="9" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="2" aria-label="Sorteer op status">Match status <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for match in matches %}
-                        <tr>
+                        <tr class="{{ 'unmatched-row' if not match.has_snow_match else '' }}" data-snow-match="{{ '1' if match.has_snow_match else '0' }}">
                             <td><span class="issue-code">{{ match.issue_code }}</span></td>
                             <td>{{ match.snow_number or '—' }}</td>
                             <td><span class="priority priority-{{ match.spo_priority|lower|replace(' ', '-') }}">{{ match.spo_priority or '—' }}</span></td>
@@ -102,6 +112,7 @@
                                 {% endif %}
                             </td>
                             <td>{{ match.updated or '—' }}</td>
+                             <td><span class="match-status {{ 'match-found' if match.has_snow_match else 'match-missing' }}">{{ 'SNOW match' if match.has_snow_match else 'Geen SNOW-match' }}</span></td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -132,6 +143,17 @@
         const table = document.querySelector('.table-wrap table');
         const sortableHeaders = [...document.querySelectorAll('.sort-button')];
         const missingValue = '—';
+        const unmatchedToggle = document.querySelector('#show-unmatched');
+
+        function updateUnmatchedRows() {
+            if (!unmatchedToggle) return;
+            table.querySelectorAll('tbody tr[data-snow-match="0"]').forEach(row => {
+                row.hidden = !unmatchedToggle.checked;
+            });
+        }
+
+        unmatchedToggle?.addEventListener('change', updateUnmatchedRows);
+        updateUnmatchedRows();
 
         document.querySelectorAll('.slo-fill[data-progress]').forEach(fill => {
             const rawProgress = Number(fill.dataset.progress || 0);

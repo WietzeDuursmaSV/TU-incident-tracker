@@ -134,7 +134,7 @@ De tabel bevat gegevens uit beide bronnen:
 
 | Bron | Velden |
 | --- | --- |
-| SPO | `Issuecode`, `Prioriteit`, `Samenvatting`, `Aangemaakt`, `Bijgewerkt`, `Ontwikkelaar` |
+| SPO | `Issuecode`, `Aangepast veld (Spark ticket priority)`, `Samenvatting`, `Aangemaakt`, `Bijgewerkt`, `Ontwikkelaar` |
 | SNOW | `priority`, `number`, `short_description`, `sys_created_on`, `sys_updated_on`, `assigned_to` |
 
 ## Ondersteund CSV-formaat
@@ -142,7 +142,7 @@ De tabel bevat gegevens uit beide bronnen:
 De app verwacht een komma-gescheiden CSV-bestand met een headerregel. Velden met komma's, aanhalingstekens en regeleinden moeten volgens de standaard CSV-regels tussen dubbele aanhalingstekens staan. De aangeleverde exports voldoen hieraan.
 
 ```csv
-Samenvatting,Issuecode,Prioriteit
+Samenvatting,Issuecode,Aangepast veld (Spark ticket priority)
 Voorbeeldissue,SPO-8447,High
 ```
 

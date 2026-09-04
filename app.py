@@ -84,6 +84,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
         issue_code = normalize_issue_code(spo_record.get("Issuecode"))
         snow_record = snow_by_issue_code.get(issue_code)
         spo_priority = str(spo_record.get("Prioriteit", "")).strip()
+        spark_priority = str(spo_record.get("Aangepast veld (Spark ticket priority)", "")).strip()
         slo_days = SLO_DAYS_BY_PRIORITY.get(spo_priority.lower())
         created_date = parse_record_date(spo_record.get("Aangemaakt"))
         created_days = max((today - created_date).days, 0) if created_date else None
@@ -104,6 +105,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "issue_code": issue_code,
                 "has_snow_match": snow_record is not None,
                 "spo_priority": spo_priority,
+                "spark_priority": spark_priority,
                 "summary": spo_record.get("Samenvatting", ""),
                 "created": spo_record.get("Aangemaakt", ""),
                 "created_display": format_display_date(spo_record.get("Aangemaakt")),

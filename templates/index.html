@@ -10,7 +10,7 @@
     <main class="shell">
         <header class="hero">
             <div class="eyebrow">Incident intelligence</div>
-            <h1>SPO <em>x</em> SNOW <em> overzicht</em></h1>
+            <h1>SPO <em>|</em> SNOW <em> overzicht</em></h1>
             <p>Combineer projectinformatie uit SPO met de bijbehorende ServiceNow-incidenten.</p>
         </header>
 
@@ -67,14 +67,13 @@
                 <table>
                     <thead>
                         <tr>
-                            <th><button class="sort-button" type="button" data-column="0" aria-label="Sorteer op SPO nummer">SPO nummer <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th><button class="sort-button" type="button" data-column="1" aria-label="Sorteer op SNOW nummer">SNOW nummer <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="0" aria-label="Sorteer op SPO nummer">SPO <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="1" aria-label="Sorteer op SNOW nummer">SNOW<span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="2" aria-label="Sorteer op SPO prioriteit">SPO prioriteit <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="3" aria-label="Sorteer op TU prioriteit">TU prioriteit <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="4" aria-label="Sorteer op samenvatting">Samenvatting <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="5" aria-label="Sorteer op behandelaar">Behandelaar <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op SPO aangemaakt">Datum <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                          
                             <th><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SLO voortgang">SLO voortgang <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="8" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                         </tr>
@@ -88,8 +87,8 @@
                             <td>{{ match.snow_priority or '—' }}</td>
                             <td class="summary">{{ match.summary or '—' }}</td>
                             <td>{{ match.developer or '—' }}</td>
-                            <td>{{ match.created or '—' }}</td>
-                            
+                            <td>{{ match.created_display or '—' }}</td>
+
                             <td data-sort="{{ match.slo_progress_value if match.slo_progress_value is not none else '' }}">
                                 {% if match.created_days is not none and match.slo_days %}
                                 <div class="slo-progress" role="img" aria-label="{{ match.created_days }} van {{ match.slo_days }} dagen">

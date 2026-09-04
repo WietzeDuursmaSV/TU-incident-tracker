@@ -47,6 +47,11 @@ def parse_record_date(value: Any) -> date | None:
     return None
 
 
+def format_display_date(value: Any) -> str:
+    parsed_date = parse_record_date(value)
+    return parsed_date.strftime("%d/%m/%Y") if parsed_date else str(value or "")
+
+
 def load_records(upload: Any) -> list[dict[str, Any]]:
     """Load a comma-separated export with quoted and multiline fields."""
     raw_data = upload.stream.read()
@@ -100,6 +105,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "spo_priority": spo_priority,
                 "summary": spo_record.get("Samenvatting", ""),
                 "created": spo_record.get("Aangemaakt", ""),
+                "created_display": format_display_date(spo_record.get("Aangemaakt")),
                 "created_days": created_days,
                 "slo_days": slo_days,
                 "slo_progress_percentage": progress_percentage,

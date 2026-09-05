@@ -71,6 +71,19 @@ def normalize_issue_code(value: Any) -> str:
     return match.group(0).upper() if match else ""
 
 
+def normalize_tu_priority(value: Any) -> str:
+    priority = str(value or "").strip().lower()
+    if priority.startswith("1") or "kritiek" in priority:
+        return "P1"
+    if priority.startswith("2") or "hoog" in priority:
+        return "P2"
+    if priority.startswith("3") or "gemiddeld" in priority:
+        return "P3"
+    if priority.startswith("4") or "laag" in priority:
+        return "P4"
+    return "-"
+
+
 def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     today = date.today()
     snow_by_issue_code: dict[str, dict[str, Any]] = {}
@@ -118,6 +131,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "updated": spo_record.get("Bijgewerkt", ""),
                 "developer": spo_record.get("Ontwikkelaar", ""),
                 "snow_priority": snow_record.get("priority", "") if snow_record else "",
+                "tu_priority": normalize_tu_priority(snow_record.get("priority")) if snow_record else "-",
                 "snow_summary": snow_record.get("short_description", "") if snow_record else "",
                 "snow_created": snow_record.get("sys_created_on", "") if snow_record else "",
                 "snow_updated": snow_record.get("sys_updated_on", "") if snow_record else "",

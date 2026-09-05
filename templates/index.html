@@ -96,7 +96,7 @@
                             <td>{{ match.snow_number or '—' }}</td>
                             <td><span class="priority priority-{{ match.spo_priority|lower|replace(' ', '-') }}">{{ match.spo_priority or '—' }}</span></td>
                             <td><span class="priority priority-{{ match.spark_priority|lower|replace(' ', '-') }}">{{ match.spark_priority or '—' }}</span></td>
-                            <td>{{ match.snow_priority or '—' }}</td>
+                            <td><span class="priority priority-{{ match.tu_priority|lower }}">{{ match.tu_priority }}</span></td>
                             <td class="summary">{{ match.summary or '—' }}</td>
                             <td>{{ match.developer or '—' }}</td>
                             <td>{{ match.created_display or '—' }}</td>

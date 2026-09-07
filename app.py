@@ -195,9 +195,9 @@ def index():
                     if match
                 }
                 spo_codes = {
-                    normalize_issue_code(record.get("Issuecode"))
+                    normalize_issue_code(record.get("Issuecode") or record.get("issue key"))
                     for record in spo_records
-                    if normalize_issue_code(record.get("Issuecode"))
+                    if normalize_issue_code(record.get("Issuecode") or record.get("issue key"))
                 }
                 info = (
                     f"Geen matches gevonden. SPO bevat {len(spo_records)} records "

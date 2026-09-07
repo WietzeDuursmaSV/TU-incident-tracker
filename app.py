@@ -109,7 +109,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
             )
         )
         spo_priority = str(spo_record.get("Prioriteit", "") or spo_record.get("Priority", "")).strip()
-        spark_priority = str(spo_record.get("Aangepast veld (Spark ticket priority)", "")).strip()
+        spark_priority = str(spo_record.get("Aangepast veld (Spark ticket priority)", "") or spo_record.get("Custom field (Spark ticket priority)", "")).strip()
         slo_days = SLO_DAYS_BY_PRIORITY.get(spo_priority.lower())
         created_date = parse_record_date(spo_record.get("Aangemaakt") or spo_record.get("Created"))
         created_days = max((today - created_date).days, 0) if created_date else None
@@ -132,6 +132,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "spo_priority": spo_priority,
                 "spark_priority": spark_priority,
                 "summary": spo_record.get("Samenvatting", "") or spo_record.get("Summary", ""),
+                "status": spo_record.get("Status", "") or spo_record.get("Status", "") or spo_record.get("State", ""),
                 "created": spo_record.get("Aangemaakt", "") or spo_record.get("Created", ""),
                 "created_display": format_display_date(spo_record.get("Aangemaakt") or spo_record.get("Created")),
                 "created_days": created_days,
@@ -140,7 +141,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "slo_progress_value": progress_value,
                 "slo_within_target": within_slo,
                 "slo_color_class": slo_color_class,
-                "updated": spo_record.get("Bijgewerkt", "") or spo_record.get("Updated", ""),
+                "updated": format_display_date(spo_record.get("Bijgewerkt", "") or spo_record.get("Updated", "")),
                 "developer": spo_record.get("Ontwikkelaar", "") or spo_record.get("Creator", ""),
                 "snow_priority": snow_record.get("priority", "") if snow_record else "",
                 "tu_priority": normalize_tu_priority(snow_record.get("priority")) if snow_record else "-",

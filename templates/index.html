@@ -82,11 +82,12 @@
                             <th><button class="sort-button" type="button" data-column="3" aria-label="Sorteer op Spark prioriteit">SPARK <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="4" aria-label="Sorteer op TU prioriteit">TU <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th ><button class="sort-button" type="button" data-column="5" aria-label="Sorteer op samenvatting">Samenvatting <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op behandelaar">Behandelaar <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SPO aangemaakt">Datum <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th ><button class="sort-button" type="button" data-column="8" aria-label="Sorteer op SLO voortgang">SLO voortgang <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th ><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SPO aangemaakt">Datum <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th ><button class="sort-button" type="button" data-column="9" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="10" aria-label="Sorteer op status">Match status <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th ><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op behandelaar">Behandelaar <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th ><button class="sort-button" type="button" data-column="10" aria-label="Sorteer op SNOW bijgewerkt">Ticket status <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th ><button class="sort-button" type="button" data-column="11" aria-label="Sorteer op status">Match status <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,9 +119,6 @@
                             <td><span class="priority priority-{{ match.spark_priority|lower|replace(' ', '-') }}">{{ match.spark_priority or '—' }}</span></td>
                             <td><span class="priority priority-{{ match.tu_priority|lower }}">{{ match.tu_priority }}</span></td>
                             <td class="summary">{{ match.summary or '—' }}</td>
-                            <td>{{ match.developer or '—' }}</td>
-                            <td>{{ match.created_display or '—' }}</td>
-
                             <td data-sort="{{ match.slo_progress_value if match.slo_progress_value is not none else '' }}">
                                 {% if match.created_days is not none and match.slo_days %}
                                 <div class="slo-progress" role="img" aria-label="{{ match.created_days }} van {{ match.slo_days }} dagen">
@@ -133,7 +131,10 @@
                                 —
                                 {% endif %}
                             </td>
+                            <td>{{ match.created_display or '—' }}</td>
                             <td>{{ match.updated or '—' }}</td>
+                            <td>{{ match.developer or '—' }}</td>
+                            <td>{{ match.status or '—' }}</td>
                             <td><span class="match-status {{ 'match-found' if match.has_snow_match else 'match-missing' }}">{{ 'SNOW match' if match.has_snow_match else 'Geen SNOW-match' }}</span></td>
                         </tr>
                     {% endfor %}

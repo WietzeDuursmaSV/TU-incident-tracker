@@ -93,7 +93,27 @@
                     {% for match in matches %}
                         <tr class="{{ 'unmatched-row' if not match.has_snow_match else '' }}" data-snow-match="{{ '1' if match.has_snow_match else '0' }}">
                             <td><a href="https://sonepardigital.atlassian.net/browse/{{ match.issue_code }}" target="_blank" rel="noopener noreferrer"><span class="issue-code">{{ match.issue_code }}</span></a></td>
-                            <td><a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ match.snow_number or '—' }}" target="_blank" rel="noopener noreferrer">{{ match.snow_number or '—' }}</a></td>
+                            <td>
+                                {% if match.snow_numbers %}
+                                {% if match.snow_numbers|length > 1 %}
+                                <details class="snow-ticket-list">
+                                    <summary>
+                                        <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ match.snow_numbers[0] }}" target="_blank" rel="noopener noreferrer">{{ match.snow_numbers[0] }}</a>
+                                        <span class="snow-ticket-count">({{ match.snow_numbers|length }})</span>
+                                    </summary>
+                                    <div class="snow-ticket-items">
+                                        {% for snow_number in match.snow_numbers[1:] %}
+                                        <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ snow_number }}" target="_blank" rel="noopener noreferrer">{{ snow_number }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </details>
+                                {% else %}
+                                <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ match.snow_numbers[0] }}" target="_blank" rel="noopener noreferrer">{{ match.snow_numbers[0] }}</a>
+                                {% endif %}
+                                {% else %}
+                                —
+                                {% endif %}
+                            </td>
                             <td><span class="priority priority-{{ match.spo_priority|lower|replace(' ', '-') }}">{{ match.spo_priority or '—' }}</span></td>
                             <td><span class="priority priority-{{ match.spark_priority|lower|replace(' ', '-') }}">{{ match.spark_priority or '—' }}</span></td>
                             <td><span class="priority priority-{{ match.tu_priority|lower }}">{{ match.tu_priority }}</span></td>

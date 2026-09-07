@@ -86,16 +86,24 @@ def normalize_tu_priority(value: Any) -> str:
 
 def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     today = date.today()
-    snow_by_issue_code: dict[str, dict[str, Any]] = {}
+    snow_by_issue_code: dict[str, list[dict[str, Any]]] = {}
     for snow_record in snow_records:
         match = ISSUE_CODE_PATTERN.search(str(snow_record.get("short_description", "")))
         if match:
-            snow_by_issue_code.setdefault(match.group(0).upper(), snow_record)
+            snow_by_issue_code.setdefault(match.group(0).upper(), []).append(snow_record)
 
     matches = []
     for spo_record in spo_records:
         issue_code = normalize_issue_code(spo_record.get("Issuecode"))
-        snow_record = snow_by_issue_code.get(issue_code)
+        matching_snow_records = snow_by_issue_code.get(issue_code, [])
+        snow_record = matching_snow_records[0] if matching_snow_records else None
+        snow_numbers = list(
+            dict.fromkeys(
+                str(record.get("number", "")).strip()
+                for record in matching_snow_records
+                if str(record.get("number", "")).strip()
+            )
+        )
         spo_priority = str(spo_record.get("Prioriteit", "")).strip()
         spark_priority = str(spo_record.get("Aangepast veld (Spark ticket priority)", "")).strip()
         slo_days = SLO_DAYS_BY_PRIORITY.get(spo_priority.lower())
@@ -116,7 +124,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
         matches.append(
             {
                 "issue_code": issue_code,
-                "has_snow_match": snow_record is not None,
+                "has_snow_match": bool(matching_snow_records),
                 "spo_priority": spo_priority,
                 "spark_priority": spark_priority,
                 "summary": spo_record.get("Samenvatting", ""),
@@ -137,6 +145,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "snow_updated": snow_record.get("sys_updated_on", "") if snow_record else "",
                 "snow_assigned_to": snow_record.get("assigned_to", "") if snow_record else "",
                 "snow_number": snow_record.get("number", "") if snow_record else "",
+                "snow_numbers": snow_numbers,
             }
         )
     return matches

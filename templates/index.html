@@ -92,7 +92,7 @@
                     <tbody>
                     {% for match in matches %}
                         <tr class="{{ 'unmatched-row' if not match.has_snow_match else '' }}" data-snow-match="{{ '1' if match.has_snow_match else '0' }}">
-                            <td><span class="issue-code">{{ match.issue_code }}</span></td>
+                            <td><a href="https://sonepardigital.atlassian.net/browse/{{ match.issue_code }}" target="_blank" rel="noopener noreferrer"><span class="issue-code">{{ match.issue_code }}</span></a></td>
                             <td>{{ match.snow_number or '—' }}</td>
                             <td><span class="priority priority-{{ match.spo_priority|lower|replace(' ', '-') }}">{{ match.spo_priority or '—' }}</span></td>
                             <td><span class="priority priority-{{ match.spark_priority|lower|replace(' ', '-') }}">{{ match.spark_priority or '—' }}</span></td>

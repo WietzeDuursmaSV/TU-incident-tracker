@@ -94,7 +94,11 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
 
     matches = []
     for spo_record in spo_records:
-        issue_code = normalize_issue_code(spo_record.get("Issuecode"))
+        issue_code = normalize_issue_code(
+            spo_record.get("Issuecode")
+            or spo_record.get("Issue key")
+            or spo_record.get("issue key")
+        )
         matching_snow_records = snow_by_issue_code.get(issue_code, [])
         snow_record = matching_snow_records[0] if matching_snow_records else None
         snow_numbers = list(
@@ -104,10 +108,10 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 if str(record.get("number", "")).strip()
             )
         )
-        spo_priority = str(spo_record.get("Prioriteit", "")).strip()
+        spo_priority = str(spo_record.get("Prioriteit", "") or spo_record.get("Priority", "")).strip()
         spark_priority = str(spo_record.get("Aangepast veld (Spark ticket priority)", "")).strip()
         slo_days = SLO_DAYS_BY_PRIORITY.get(spo_priority.lower())
-        created_date = parse_record_date(spo_record.get("Aangemaakt"))
+        created_date = parse_record_date(spo_record.get("Aangemaakt") or spo_record.get("Created"))
         created_days = max((today - created_date).days, 0) if created_date else None
         if created_days is not None and slo_days:
             progress_value = (created_days / slo_days) * 100
@@ -127,17 +131,17 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "has_snow_match": bool(matching_snow_records),
                 "spo_priority": spo_priority,
                 "spark_priority": spark_priority,
-                "summary": spo_record.get("Samenvatting", ""),
-                "created": spo_record.get("Aangemaakt", ""),
-                "created_display": format_display_date(spo_record.get("Aangemaakt")),
+                "summary": spo_record.get("Samenvatting", "") or spo_record.get("Summary", ""),
+                "created": spo_record.get("Aangemaakt", "") or spo_record.get("Created", ""),
+                "created_display": format_display_date(spo_record.get("Aangemaakt") or spo_record.get("Created")),
                 "created_days": created_days,
                 "slo_days": slo_days,
                 "slo_progress_percentage": progress_percentage,
                 "slo_progress_value": progress_value,
                 "slo_within_target": within_slo,
                 "slo_color_class": slo_color_class,
-                "updated": spo_record.get("Bijgewerkt", ""),
-                "developer": spo_record.get("Ontwikkelaar", ""),
+                "updated": spo_record.get("Bijgewerkt", "") or spo_record.get("Updated", ""),
+                "developer": spo_record.get("Ontwikkelaar", "") or spo_record.get("Creator", ""),
                 "snow_priority": snow_record.get("priority", "") if snow_record else "",
                 "tu_priority": normalize_tu_priority(snow_record.get("priority")) if snow_record else "-",
                 "snow_summary": snow_record.get("short_description", "") if snow_record else "",

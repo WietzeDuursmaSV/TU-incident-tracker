@@ -33,15 +33,17 @@
                             <span class="file-topline"><span class="file-mark spo-mark">S</span><span class="file-label">SPO</span><span class="upload-status status-{{ spo_status }}" aria-label="SPO {{ spo_status }}">{{ '✓' if spo_status == 'success' else '×' if spo_status == 'error' else '•' }}</span></span>
                             <strong id="spo_file-name">{{ spo_name or '-' }}</strong>
                             <span class="file-hint">Leidend veld: Issuecode</span>
+                            <span class="drop-hint">Sleep je CSV-bestand hierheen</span>
                             <span class="choose">Bestand kiezen <span aria-hidden="true">↗</span></span>
-                            <input id="spo_file" name="spo_file" type="file" accept=".csv,text/csv" required>
+                            <input id="spo_file" class="file-input" name="spo_file" type="file" accept=".csv,text/csv" required>
                         </label>
                         <label class="file-card" for="snow_file">
                             <span class="file-topline"><span class="file-mark snow-mark">N</span><span class="file-label">SNOW</span><span class="upload-status status-{{ snow_status }}" aria-label="SNOW {{ snow_status }}">{{ '✓' if snow_status == 'success' else '×' if snow_status == 'error' else '•' }}</span></span>
                             <strong id="snow_file-name">{{ snow_name or '-' }}</strong>
                             <span class="file-hint">Matchveld: short_description</span>
+                            <span class="drop-hint">Sleep je CSV-bestand hierheen</span>
                             <span class="choose">Bestand kiezen <span aria-hidden="true">↗</span></span>
-                            <input id="snow_file" name="snow_file" type="file" accept=".csv,text/csv" required>
+                            <input id="snow_file" class="file-input"s name="snow_file" type="file" accept=".csv,text/csv" required>
                         </label>
                     </div>
                     <div class="form-footer">
@@ -151,98 +153,6 @@
         </section>
         <footer><span>SPO x SNOW</span><span>Matcht op Issuecode → short_description</span></footer>
     </main>
-    <script>
-        const inputs = [...document.querySelectorAll('input[type="file"]')];
-        const status = document.querySelector('#file-status');
-        inputs.forEach(input => input.addEventListener('change', () => {
-            const selected = inputs.filter(item => item.files.length).length;
-            status.textContent = `${selected} van 2 bestanden geselecteerd`;
-            const fileName = document.querySelector(`#${input.id}-name`);
-            if (fileName && input.files[0]) {
-                fileName.textContent = input.files[0].name;
-            }
-        }));
-
-        const table = document.querySelector('.table-wrap table');
-        const sortableHeaders = [...document.querySelectorAll('.sort-button')];
-        const missingValue = '—';
-        const unmatchedToggle = document.querySelector('#show-unmatched');
-
-        function updateUnmatchedRows() {
-            if (!unmatchedToggle) return;
-            table.querySelectorAll('tbody tr[data-snow-match="0"]').forEach(row => {
-                row.hidden = !unmatchedToggle.checked;
-            });
-        }
-
-        unmatchedToggle?.addEventListener('change', updateUnmatchedRows);
-        updateUnmatchedRows();
-
-        document.querySelectorAll('.slo-fill[data-progress]').forEach(fill => {
-            const rawProgress = Number(fill.dataset.progress || 0);
-            const progress = Math.max(0, Math.min(rawProgress, 100));
-            fill.style.width = `${progress}%`;
-            fill.classList.add(fill.dataset.withinSlo === '1' ? 'is-green' : 'is-red');
-        });
-
-        function sortValue(value) {
-            const normalized = value.trim();
-            if (!normalized || normalized === missingValue) return { type: 'empty', value: '' };
-
-            const decimalNumber = normalized.match(/^-?\d+(?:[.,]\d+)?$/);
-            if (decimalNumber) {
-                return { type: 'number', value: Number(normalized.replace(',', '.')) };
-            }
-
-            const date = normalized.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})(?:\s+(\d{1,2}):(\d{2}))?/);
-            if (date) {
-                return {
-                    type: 'date',
-                    value: new Date(
-                        Number(date[3]), Number(date[2]) - 1, Number(date[1]),
-                        Number(date[4] || 0), Number(date[5] || 0)
-                    ).getTime()
-                };
-            }
-
-            const priority = normalized.match(/^(\d+)/);
-            if (priority) return { type: 'number', value: Number(priority[1]) };
-
-            return { type: 'text', value: normalized.toLocaleLowerCase('nl') };
-        }
-
-        sortableHeaders.forEach(header => header.addEventListener('click', () => {
-            const column = Number(header.dataset.column);
-            const currentDirection = header.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
-            const directionMultiplier = currentDirection === 'ascending' ? 1 : -1;
-            const rows = [...table.tBodies[0].rows];
-
-            rows.sort((leftRow, rightRow) => {
-                const leftCell = leftRow.cells[column];
-                const rightCell = rightRow.cells[column];
-                const leftSource = leftCell.dataset.sort || leftCell.textContent;
-                const rightSource = rightCell.dataset.sort || rightCell.textContent;
-                const leftValue = sortValue(leftSource);
-                const rightValue = sortValue(rightSource);
-                if (leftValue.type === 'empty' && rightValue.type !== 'empty') return 1;
-                if (rightValue.type === 'empty' && leftValue.type !== 'empty') return -1;
-                if (
-                    (leftValue.type === 'number' && rightValue.type === 'number') ||
-                    (leftValue.type === 'date' && rightValue.type === 'date')
-                ) {
-                    return (leftValue.value - rightValue.value) * directionMultiplier;
-                }
-                return String(leftValue.value).localeCompare(String(rightValue.value), 'nl') * directionMultiplier;
-            });
-
-            rows.forEach(row => table.tBodies[0].appendChild(row));
-            sortableHeaders.forEach(otherHeader => {
-                otherHeader.removeAttribute('aria-sort');
-                otherHeader.querySelector('.sort-indicator').textContent = '↕';
-            });
-            header.setAttribute('aria-sort', currentDirection);
-            header.querySelector('.sort-indicator').textContent = currentDirection === 'ascending' ? '↑' : '↓';
-        }));
-    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

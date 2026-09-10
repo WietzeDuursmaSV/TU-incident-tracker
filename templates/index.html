@@ -5,58 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SPO x SNOW Incident Tracker</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <main class="shell">
+        <!-- HERO / HEADER -->
         <header class="hero">
-            <div class="eyebrow">Incident intelligence</div>
-            <h1>SPO <em>vs</em> SNOW <em> overzicht</em></h1>
-            <p>Combineer projectinformatie uit SPO met de bijbehorende ServiceNow-incidenten.</p>
+            <div class="hero-brand">
+                <div class="eyebrow">Incident Intelligence</div>
+                <h1>SPO <span class="highlight">vs</span> SNOW <span class="sub-title">overzicht</span></h1>
+            </div>
+            <p class="hero-desc">Combineer projectinformatie uit SPO naadloos met bijbehorende ServiceNow-incidenten.</p>
         </header>
 
+        <!-- UPLOAD PANEL -->
         <details class="upload-panel" open>
             <summary class="section-heading">
-                <div>
+                <div class="heading-meta">
                     <span class="section-kicker">01 / bronbestanden</span>
                     <h2 id="upload-title">Laad je exports in</h2>
                 </div>
-                <span class="summary-action">
+                <div class="summary-action">
                     <span class="format-badge">CSV only</span>
                     <span class="collapse-label">Bestanden wijzigen</span>
                     <span class="collapse-icon" aria-hidden="true">⌄</span>
-                </span>
+                </div>
             </summary>
+
             <div class="upload-content">
                 <form method="post" enctype="multipart/form-data">
                     <div class="upload-grid">
+                        <!-- SPO CARD -->
                         <label class="file-card" for="spo_file">
-                            <span class="file-topline"><span class="file-mark spo-mark">S</span><span class="file-label">SPO</span><span class="upload-status status-{{ spo_status }}" aria-label="SPO {{ spo_status }}">{{ '✓' if spo_status == 'success' else '×' if spo_status == 'error' else '•' }}</span></span>
-                            <strong id="spo_file-name">{{ spo_name or '-' }}</strong>
-                            <span class="file-hint">Leidend veld: Issuecode</span>
-                            <span class="drop-hint">Sleep je CSV-bestand hierheen</span>
-                            <span class="choose">Bestand kiezen <span aria-hidden="true">↗</span></span>
+                            <div class="file-topline">
+                                <span class="file-mark spo-mark">S</span>
+                                <div class="file-info">
+                                    <span class="file-label">SPO Export</span>
+                                    <span class="file-hint">Leidend veld: Issuecode</span>
+                                </div>
+                                <span class="upload-status status-{{ spo_status }}" aria-label="SPO {{ spo_status }}">
+                                    {{ '✓' if spo_status == 'success' else '×' if spo_status == 'error' else '•' }}
+                                </span>
+                            </div>
+                            <div class="file-body">
+                                <strong id="spo_file-name" class="file-name">{{ spo_name or 'Geen bestand gekozen' }}</strong>
+                                <span class="drop-hint">Sleep je CSV-bestand hierheen</span>
+                            </div>
+                            <div class="file-action">
+                                <span class="choose">Bestand kiezen <span aria-hidden="true">↗</span></span>
+                            </div>
                             <input id="spo_file" class="file-input" name="spo_file" type="file" accept=".csv,text/csv" required>
                         </label>
+
+                        <!-- SNOW CARD -->
                         <label class="file-card" for="snow_file">
-                            <span class="file-topline"><span class="file-mark snow-mark">N</span><span class="file-label">SNOW</span><span class="upload-status status-{{ snow_status }}" aria-label="SNOW {{ snow_status }}">{{ '✓' if snow_status == 'success' else '×' if snow_status == 'error' else '•' }}</span></span>
-                            <strong id="snow_file-name">{{ snow_name or '-' }}</strong>
-                            <span class="file-hint">Matchveld: short_description</span>
-                            <span class="drop-hint">Sleep je CSV-bestand hierheen</span>
-                            <span class="choose">Bestand kiezen <span aria-hidden="true">↗</span></span>
-                            <input id="snow_file" class="file-input"s name="snow_file" type="file" accept=".csv,text/csv" required>
+                            <div class="file-topline">
+                                <span class="file-mark snow-mark">N</span>
+                                <div class="file-info">
+                                    <span class="file-label">ServiceNow Export</span>
+                                    <span class="file-hint">Matchveld: short_description</span>
+                                </div>
+                                <span class="upload-status status-{{ snow_status }}" aria-label="SNOW {{ snow_status }}">
+                                    {{ '✓' if snow_status == 'success' else '×' if snow_status == 'error' else '•' }}
+                                </span>
+                            </div>
+                            <div class="file-body">
+                                <strong id="snow_file-name" class="file-name">{{ snow_name or 'Geen bestand gekozen' }}</strong>
+                                <span class="drop-hint">Sleep je CSV-bestand hierheen</span>
+                            </div>
+                            <div class="file-action">
+                                <span class="choose">Bestand kiezen <span aria-hidden="true">↗</span></span>
+                            </div>
+                            <input id="snow_file" class="file-input" name="snow_file" type="file" accept=".csv,text/csv" required>
                         </label>
                     </div>
+
                     <div class="form-footer">
                         <span id="file-status">Nog geen bestanden geselecteerd</span>
-                        <button type="submit">Toon matches <span aria-hidden="true">→</span></button>
+                        <button type="submit" class="btn-primary">
+                            <span>Toon matches</span>
+                            <span class="btn-icon" aria-hidden="true">→</span>
+                        </button>
                     </div>
                 </form>
-                {% if error %}<div class="alert" role="alert">{{ error }}</div>{% endif %}
+
+                {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
                 {% if info %}<div class="alert alert-info" role="status">{{ info }}</div>{% endif %}
             </div>
         </details>
 
+        <!-- RESULTS SECTION -->
         <section class="results" aria-labelledby="results-title">
             <div class="results-heading">
                 <div>
@@ -65,7 +106,9 @@
                 </div>
                 {% if matches %}
                 <div class="results-tools">
-                    <div class="result-count"><strong>{{ matches|length }}</strong> SPO tickets</div>
+                    <div class="result-count">
+                        <strong>{{ matches|length }}</strong> SPO tickets
+                    </div>
                     <label class="unmatched-toggle" for="show-unmatched">
                         <input id="show-unmatched" type="checkbox" {% if unmatched_count == 0 %}checked{% endif %}>
                         <span>Toon zonder SNOW-match ({{ unmatched_count }})</span>
@@ -73,55 +116,59 @@
                 </div>
                 {% endif %}
             </div>
+
             {% if matches %}
             <div class="table-wrap">
                 <table>
                     <thead>
-
-                        <tr class="priority-subheader">
-                            <th ><button class="sort-button" type="button" data-column="0" aria-label="Sorteer op SPO nummer">SPO <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="1" aria-label="Sorteer op SNOW nummer">SNOW<span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                        <tr>
+                            <th><button class="sort-button" type="button" data-column="0" aria-label="Sorteer op SPO nummer">SPO <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="1" aria-label="Sorteer op SNOW nummer">SNOW <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="2" aria-label="Sorteer op SPO prioriteit">SPO <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="3" aria-label="Sorteer op Spark prioriteit">SPARK <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="4" aria-label="Sorteer op TU prioriteit">TU <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="5" aria-label="Sorteer op samenvatting">Samenvatting <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="8" aria-label="Sorteer op SLO voortgang">SLO voortgang <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SPO aangemaakt">Datum <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="9" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op behandelaar">Behandelaar <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="10" aria-label="Sorteer op SNOW bijgewerkt">Ticket status <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                            <th ><button class="sort-button" type="button" data-column="11" aria-label="Sorteer op status">Match status <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="5" aria-label="Sorteer op samenvatting">Samenvatting <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="8" aria-label="Sorteer op SLO voortgang">SLO voortgang <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="7" aria-label="Sorteer op SPO aangemaakt">Datum <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="9" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op behandelaar">Behandelaar <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                            <th><button class="sort-button" type="button" data-column="10" aria-label="Sorteer op ticket status">Ticket status <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
+                           
                         </tr>
                     </thead>
                     <tbody>
                     {% for match in matches %}
                         <tr class="{{ 'unmatched-row' if not match.has_snow_match else '' }}" data-snow-match="{{ '1' if match.has_snow_match else '0' }}">
-                            <td><a href="https://sonepardigital.atlassian.net/browse/{{ match.issue_code }}" target="_blank" rel="noopener noreferrer"><span class="issue-code">{{ match.issue_code }}</span></a></td>
+                            <td>
+                                <a href="https://sonepardigital.atlassian.net/browse/{{ match.issue_code }}" target="_blank" rel="noopener noreferrer" class="link-code">
+                                    <span class="issue-code">{{ match.issue_code }}</span>
+                                </a>
+                            </td>
                             <td>
                                 {% if match.snow_numbers %}
-                                {% if match.snow_numbers|length > 1 %}
-                                <details class="snow-ticket-list">
-                                    <summary>
-                                        <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ match.snow_numbers[0] }}" target="_blank" rel="noopener noreferrer">{{ match.snow_numbers[0] }}</a>
-                                        <span class="snow-ticket-count">({{ match.snow_numbers|length }})</span>
-                                    </summary>
-                                    <div class="snow-ticket-items">
-                                        {% for snow_number in match.snow_numbers[1:] %}
-                                        <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ snow_number }}" target="_blank" rel="noopener noreferrer">{{ snow_number }}</a>
-                                        {% endfor %}
-                                    </div>
-                                </details>
+                                    {% if match.snow_numbers|length > 1 %}
+                                    <details class="snow-ticket-list">
+                                        <summary>
+                                            <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ match.snow_numbers[0] }}" target="_blank" rel="noopener noreferrer" class="snow-link">{{ match.snow_numbers[0] }}</a>
+                                            <span class="snow-ticket-count">({{ match.snow_numbers|length }})</span>
+                                        </summary>
+                                        <div class="snow-ticket-items">
+                                            {% for snow_number in match.snow_numbers[1:] %}
+                                            <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ snow_number }}" target="_blank" rel="noopener noreferrer" class="snow-link">{{ snow_number }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    </details>
+                                    {% else %}
+                                    <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ match.snow_numbers[0] }}" target="_blank" rel="noopener noreferrer" class="snow-link">{{ match.snow_numbers[0] }}</a>
+                                    {% endif %}
                                 {% else %}
-                                <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ match.snow_numbers[0] }}" target="_blank" rel="noopener noreferrer">{{ match.snow_numbers[0] }}</a>
-                                {% endif %}
-                                {% else %}
-                                —
+                                <span class="text-muted">—</span>
                                 {% endif %}
                             </td>
                             <td><span class="priority priority-{{ match.spo_priority|lower|replace(' ', '-') }}">{{ match.spo_priority or '—' }}</span></td>
                             <td><span class="priority priority-{{ match.spark_priority|lower|replace(' ', '-') }}">{{ match.spark_priority or '—' }}</span></td>
-                            <td><span class="priority priority-{{ match.tu_priority|lower }}">{{ match.tu_priority }}</span></td>
-                            <td class="summary">{{ match.summary or '—' }}</td>
+                            <td><span class="priority priority-{{ match.tu_priority|lower }}">{{ match.tu_priority or '—' }}</span></td>
+                            <td class="summary" title="{{ match.summary }}">{{ match.summary or '—' }}</td>
                             <td data-sort="{{ match.slo_progress_value if match.slo_progress_value is not none else '' }}">
                                 {% if match.created_days is not none and match.slo_days %}
                                 <div class="slo-progress" role="img" aria-label="{{ match.created_days }} van {{ match.slo_days }} dagen">
@@ -131,14 +178,14 @@
                                     <span class="slo-label">{{ match.created_days }} / {{ match.slo_days }} dagen</span>
                                 </div>
                                 {% else %}
-                                —
+                                <span class="text-muted">—</span>
                                 {% endif %}
                             </td>
-                            <td>{{ match.created_display or '—' }}</td>
-                            <td>{{ match.updated or '—' }}</td>
-                            <td>{{ match.developer or '—' }}</td>
-                            <td>{{ match.status or '—' }}</td>
-                            <td><span class="match-status {{ 'match-found' if match.has_snow_match else 'match-missing' }}">{{ 'SNOW match' if match.has_snow_match else 'Geen SNOW-match' }}</span></td>
+                            <td class="text-nowrap">{{ match.created_display or '—' }}</td>
+                            <td class="text-nowrap">{{ match.updated or '—' }}</td>
+                            <td><span class="user-badge">{{ match.developer or '—' }}</span></td>
+                            <td><span class="status-pill">{{ match.status or '—' }}</span></td>
+                           
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -146,13 +193,19 @@
             </div>
             {% else %}
             <div class="empty-state">
-                <span class="empty-icon">+</span>
+                <div class="empty-icon-wrap">
+                    <span class="empty-icon">📊</span>
+                </div>
                 <h3>{{ 'Geen matches gevonden' if info else 'Je overzicht wacht op data' }}</h3>
                 <p>{{ 'Controleer of Issuecode en short_description dezelfde SPO-code bevatten.' if info else 'Upload beide CSV-bestanden hierboven om overeenkomende SPO-nummers te zien.' }}</p>
             </div>
             {% endif %}
         </section>
-        <footer><span>SPO x SNOW</span><span>Matcht op Issuecode → short_description</span></footer>
+
+        <footer>
+            <span>SPO x SNOW Incident Tracker</span>
+            <span>Matcht op <code>Issuecode</code> → <code>short_description</code></span>
+        </footer>
     </main>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

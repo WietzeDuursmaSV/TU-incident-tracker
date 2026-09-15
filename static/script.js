@@ -391,3 +391,52 @@ sortableHeaders.forEach(header => {
     });
 });
 
+// ---------------------------------------------------------
+// Match Timestamp Opslaan in LocalStorage
+// ---------------------------------------------------------
+
+const uploadForm = document.querySelector('.upload-panel form');
+
+if (uploadForm) {
+    debugger;
+    uploadForm.addEventListener('submit', () => {
+        saveMatchTimestamp();
+    });
+}
+
+function saveMatchTimestamp() {
+    const TWO_HOURS_IN_MS = 2 * 60 * 60 * 1000;
+    const now = Date.now();
+
+    // 1. Haal eerdere data op uit localStorage
+    const savedData = localStorage.getItem('match_history');
+    let history = savedData ? JSON.parse(savedData) : [];
+
+    // 2. Controleer wanneer de laatste match is opgeslagen
+    if (history.length > 0) {
+        const lastEntry = history[history.length - 1];
+        const lastTimestamp = new Date(lastEntry.timestamp).getTime();
+
+        // Als het verschil kleiner is dan 2 uur (7200000 ms), stop de functie
+        if (now - lastTimestamp < TWO_HOURS_IN_MS) {
+            console.log('Match niet opgeslagen: er is in de afgelopen 2 uur al een entry gemaakt.');
+            return;
+        }
+    }
+
+    // 3. Haal het aantal SPO tickets met een match op uit het DOM
+    // (Aantal rijen in de tabel met data-snow-match="1")
+    const matchedTicketsCount = document.querySelectorAll('tbody tr[data-snow-match="1"]').length;
+
+    // 4. Maak een nieuw datablock aan
+    const newEntry = {
+        timestamp: new Date().toISOString(),
+        matched_spo_tickets: matchedTicketsCount
+    };
+
+    // 5. Voeg toe aan de historie en sla op in localStorage
+    history.push(newEntry);
+    localStorage.setItem('match_history', JSON.stringify(history));
+
+    console.log('Nieuwe match timestamp opgeslagen:', newEntry);
+}

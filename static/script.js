@@ -426,7 +426,7 @@ function saveMatchTimestamp() {
     // 3. Haal het aantal SPO tickets met een match op uit het DOM
     // (Aantal rijen in de tabel met data-snow-match="1")
     const matchedTicketsCount = document.querySelectorAll('tbody tr[data-snow-match="1"]').length;
-    const totalTicketsCount = document.querySelectorAll('tbody tr:not([data-snow-match="1"])').length;
+    const totalTicketsCount = document.querySelectorAll('tbody tr').length;
 
 
     // 4. Maak een nieuw datablock aan

@@ -398,7 +398,6 @@ sortableHeaders.forEach(header => {
 const uploadForm = document.querySelector('.upload-panel form');
 
 if (uploadForm) {
-    debugger;
     uploadForm.addEventListener('submit', () => {
         saveMatchTimestamp();
     });

@@ -104,6 +104,7 @@
                     <span class="section-kicker">02 / resultaat</span>
                     <h2 id="results-title">Gevonden incidenten</h2>
                 </div>
+            
                 {% if matches %}
                 <div class="results-tools">
                     <div class="result-count">
@@ -193,15 +194,19 @@
             </div>
             {% else %}
             <div class="empty-state">
-                <div class="empty-icon-wrap">
-                    <span class="empty-icon">📊</span>
-                </div>
+               
                 <h3>{{ 'Geen matches gevonden' if info else 'Je overzicht wacht op data' }}</h3>
                 <p>{{ 'Controleer of Issuecode en short_description dezelfde SPO-code bevatten.' if info else 'Upload beide CSV-bestanden hierboven om overeenkomende SPO-nummers te zien.' }}</p>
             </div>
             {% endif %}
         </section>
-
+        <div class="results">
+            <span class="section-kicker">03 / Historie</span>
+            <h2 id="results-title">Aantal bij eerdere matches</h2>
+        </div>
+        <div class="match-timeline" id="match-timeline">
+            <!-- Tijdlijn wordt gevuld vanuit localStorage -->
+        </div>
         <footer>
             <span>SPO x SNOW Incident Tracker</span>
             <span>Matcht op <code>Issuecode</code> → <code>short_description</code></span>

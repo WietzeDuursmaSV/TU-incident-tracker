@@ -358,7 +358,6 @@ footer {
     justify-content: space-between; 
     color: var(--muted-text); 
     border-top: 1px solid var(--border); 
-    margin-top: 48px; 
     padding-top: 20px; 
     font-size: 12px; 
 }
@@ -369,3 +368,177 @@ footer code { background: #e2e8f0; color: var(--text); padding: 2px 6px; border-
     .hero-desc { text-align: left; }
     .upload-grid { grid-template-columns: 1fr; }
 }
+
+
+/* ---------------------------------------------------------
+   Match History Tijdlijn
+--------------------------------------------------------- */
+
+.match-timeline {
+    width: 100%;
+}
+
+
+/* ---------------------------------------------------------
+   Chart
+--------------------------------------------------------- */
+
+.timeline-chart {
+    display: flex;
+    width: 100%;
+    height: 60px;
+}
+
+
+/* ---------------------------------------------------------
+   Y-as
+--------------------------------------------------------- */
+
+
+.timeline-y-axis span {
+    line-height: 1;
+}
+
+
+/* ---------------------------------------------------------
+   Grafiek
+--------------------------------------------------------- */
+
+.timeline-graph {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-bottom: 1px solid #dfe2e6;
+}
+
+
+/* ---------------------------------------------------------
+   Grid lijnen
+--------------------------------------------------------- */
+
+.timeline-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 28px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    pointer-events: none;
+}
+
+.timeline-grid span {
+    width: 100%;
+    border-top: 1px dashed #e3e5e8;
+}
+
+
+/* ---------------------------------------------------------
+   Balken
+--------------------------------------------------------- */
+
+.timeline-bars {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   Eén item
+--------------------------------------------------------- */
+
+.timeline-item {
+    flex: 1;
+    min-width: 42px;
+    max-width: 80px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+}
+
+
+/* ---------------------------------------------------------
+   Gebied waarin de balk staat
+--------------------------------------------------------- */
+
+.timeline-bar-area {
+    position: relative;
+    height: calc(100% - 28px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+
+/* ---------------------------------------------------------
+   Verticale balk
+--------------------------------------------------------- */
+
+.timeline-bar {
+    width: 70%;
+    min-height: 2px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 5px;
+    box-sizing: border-box;
+    background: var(--brand);
+    border-radius: 5px 5px 0 0;
+    transition: height 0.3s ease;
+}
+
+
+/* ---------------------------------------------------------
+   Waarde in de balk
+--------------------------------------------------------- */
+
+.timeline-value {
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   Datum onder de balk
+--------------------------------------------------------- */
+
+.timeline-date {
+    height: 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-top: 5px;
+    box-sizing: border-box;
+    font-size: 0.65rem;
+    color: #6f747d;
+    white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   Geen data
+--------------------------------------------------------- */
+
+.timeline-empty {
+    padding: 1rem;
+    font-size: 0.8rem;
+    color: #8a8f98;
+    background: #f7f8fa;
+    border-radius: 6px;
+}
+

@@ -391,54 +391,196 @@ sortableHeaders.forEach(header => {
     });
 });
 
+
 // ---------------------------------------------------------
-// Match Timestamp Opslaan in LocalStorage
+// Match History Tijdlijn
 // ---------------------------------------------------------
 
-const uploadForm = document.querySelector('.upload-panel form');
+document.addEventListener('DOMContentLoaded', () => {
 
-if (uploadForm) {
-    uploadForm.addEventListener('submit', () => {
-        saveMatchTimestamp();
-    });
-}
+    const timeline = document.querySelector('#match-timeline');
 
-function saveMatchTimestamp() {
-    const TWO_HOURS_IN_MS = 2 * 60 * 60 * 1000;
-    const now = Date.now();
+    if (!timeline) {
+        return;
+    }
 
-    // 1. Haal eerdere data op uit localStorage
-    const savedData = localStorage.getItem('match_history');
-    let history = savedData ? JSON.parse(savedData) : [];
 
-    // 2. Controleer wanneer de laatste match is opgeslagen
-    if (history.length > 0) {
-        const lastEntry = history[history.length - 1];
-        const lastTimestamp = new Date(lastEntry.timestamp).getTime();
+    // ---------------------------------------------------------
+    // LocalStorage uitlezen
+    // ---------------------------------------------------------
 
-        // Als het verschil kleiner is dan 2 uur (7200000 ms), stop de functie
-        if (now - lastTimestamp < TWO_HOURS_IN_MS) {
-            console.log('Match niet opgeslagen: er is in de afgelopen 2 uur al een entry gemaakt.');
-            return;
+    function getMatchHistory() {
+        const savedData = localStorage.getItem('match_history');
+
+        if (!savedData) {
+            return [];
+        }
+
+        try {
+            return JSON.parse(savedData);
+        } catch (error) {
+            console.error(
+                'Fout bij uitlezen van match_history:',
+                error
+            );
+
+            return [];
         }
     }
 
-    // 3. Haal het aantal SPO tickets met een match op uit het DOM
-    // (Aantal rijen in de tabel met data-snow-match="1")
-    const matchedTicketsCount = document.querySelectorAll('tbody tr[data-snow-match="1"]').length;
-    const totalTicketsCount = document.querySelectorAll('tbody tr').length;
+
+    // ---------------------------------------------------------
+    // Datum formatteren
+    // ---------------------------------------------------------
+
+    function formatDate(timestamp) {
+
+        const date = new Date(timestamp);
+
+        return date.toLocaleDateString('nl-NL', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    }
 
 
-    // 4. Maak een nieuw datablock aan
-    const newEntry = {
-        timestamp: new Date().toISOString(),
-        matched_spo_tickets: matchedTicketsCount,
-        total_spo_tickets: totalTicketsCount
-    };
+    // ---------------------------------------------------------
+    // Tijdlijn renderen
+    // ---------------------------------------------------------
 
-    // 5. Voeg toe aan de historie en sla op in localStorage
-    history.push(newEntry);
-    localStorage.setItem('match_history', JSON.stringify(history));
+    function renderMatchTimeline() {
 
-    console.log('Nieuwe match timestamp opgeslagen:', newEntry);
-}
+        const history = getMatchHistory().filter(
+            entry => Number(entry.total_spo_tickets) > 0
+        );
+
+        timeline.innerHTML = '';
+
+
+        if (!history.length) {
+
+            timeline.innerHTML = `
+                <div class="timeline-empty">
+                    Nog geen matchhistorie beschikbaar.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        // -----------------------------------------------------
+        // Chart
+        // -----------------------------------------------------
+
+        const chart = document.createElement('div');
+        chart.className = 'timeline-chart';
+
+
+        // -----------------------------------------------------
+        // Y-as labels
+        // -----------------------------------------------------
+
+        const yAxis = document.createElement('div');
+        yAxis.className = 'timeline-y-axis';
+
+        yAxis.innerHTML = `
+  
+        `;
+
+        chart.appendChild(yAxis);
+
+
+        // -----------------------------------------------------
+        // Grafiek
+        // -----------------------------------------------------
+
+        const graph = document.createElement('div');
+        graph.className = 'timeline-graph';
+
+
+        // Horizontale hulplijnen
+        const grid = document.createElement('div');
+        grid.className = 'timeline-grid';
+
+        grid.innerHTML = `
+           
+            <span></span>
+            <span></span>
+            <span></span>
+        `;
+
+        graph.appendChild(grid);
+
+
+        // -----------------------------------------------------
+        // Balken
+        // -----------------------------------------------------
+
+        const bars = document.createElement('div');
+        bars.className = 'timeline-bars';
+
+
+        history.forEach((entry) => {
+
+            const totalTickets =
+                Number(entry.total_spo_tickets) || 0;
+
+
+            // Waarde beperken tot 0 - 80
+            const value = Math.min(
+                Math.max(totalTickets, 0),
+                80
+            );
+
+
+            // Hoogte als percentage van 80
+            const height = (value / 80) * 100;
+
+
+            const item = document.createElement('div');
+            item.className = 'timeline-item';
+
+
+            item.innerHTML = `
+                <div class="timeline-bar-area">
+
+                    <div
+                        class="timeline-bar"
+                        style="height: ${height}%"
+                        title="${totalTickets} SPO tickets"
+                    >
+                        <span class="timeline-value">
+                            ${totalTickets}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="timeline-date">
+                    ${formatDate(entry.timestamp)}
+                </div>
+            `;
+
+
+            bars.appendChild(item);
+        });
+
+
+        graph.appendChild(bars);
+
+        chart.appendChild(graph);
+
+        timeline.appendChild(chart);
+    }
+
+
+    // ---------------------------------------------------------
+    // Initialiseren
+    // ---------------------------------------------------------
+
+    renderMatchTimeline();
+
+});
+

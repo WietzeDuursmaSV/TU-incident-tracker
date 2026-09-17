@@ -18,7 +18,10 @@
                 <div class="eyebrow">Incident Intelligence</div>
                 <h1>SPO <span class="highlight">-</span> SNOW <span class="sub-title">overzicht</span></h1>
             </div>
-            <p class="hero-desc">Combineer projectinformatie uit SPO naadloos met bijbehorende ServiceNow-incidenten.</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%;">
+                <p class="hero-desc">Combineer projectinformatie uit SPO naadloos met bijbehorende ServiceNow-incidenten.</p>
+               
+            </div>
         </header>
 
         <!-- UPLOAD PANEL -->
@@ -89,6 +92,10 @@
                             <span>Toon matches</span>
                             <span class="btn-icon" aria-hidden="true">→</span>
                         </button>
+                         <!-- Knop om de Modal te openen -->
+                        <button type="button" class="btn-primary" onclick="document.getElementById('kb-modal').showModal()">
+                            ServiceNow-zoeken
+                        </button>
                     </div>
                 </form>
 
@@ -134,7 +141,6 @@
                             <th><button class="sort-button" type="button" data-column="9" aria-label="Sorteer op SPO bijgewerkt">SPO bijgewerkt <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="6" aria-label="Sorteer op behandelaar">Melder <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
                             <th><button class="sort-button" type="button" data-column="10" aria-label="Sorteer op ticket status">Ticket status <span class="sort-indicator" aria-hidden="true">↕</span></button></th>
-                           
                         </tr>
                     </thead>
                     <tbody>
@@ -186,7 +192,6 @@
                             <td class="text-nowrap">{{ match.updated or '—' }}</td>
                             <td><span class="user-badge">{{ match.reporter or '—' }}</span></td>
                             <td><span class="status-pill">{{ match.status or '—' }}</span></td>
-                           
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -194,24 +199,51 @@
             </div>
             {% else %}
             <div class="empty-state">
-               
                 <h3>{{ 'Geen matches gevonden' if info else 'Je overzicht wacht op data' }}</h3>
                 <p>{{ 'Controleer of Issuecode en short_description dezelfde SPO-code bevatten.' if info else 'Upload beide CSV-bestanden hierboven om overeenkomende SPO-nummers te zien.' }}</p>
             </div>
             {% endif %}
         </section>
+
         <div class="results">
             <span class="section-kicker">03 / Historie</span>
-            <h2 id="results-title">Aantal bij eerdere matches</h2>
+            <h2>Aantal bij eerdere matches</h2>
         </div>
         <div class="match-timeline" id="match-timeline">
             <!-- Tijdlijn wordt gevuld vanuit localStorage -->
         </div>
+
         <footer>
             <span>SPO x SNOW Incident Tracker</span>
             <span>Matcht op <code>Issuecode</code> → <code>short_description</code></span>
         </footer>
     </main>
+
+    <!-- MODAL / DIALOG VOOR SNOW ZOEKEN -->
+    <dialog id="kb-modal" style="padding: 25px; border-radius: 8px; border: 1px solid #ccc; max-width: 600px; width: 90%; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2 style="margin: 0;">Snow-zoeken</h2>
+            <button onclick="document.getElementById('kb-modal').close()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0 5px;">&times;</button>
+        </div>
+
+        <p>Doorzoek de SNOW-incidenten op context en oplossingen:</p>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <input type="text" id="kb-query" placeholder="bijv. 'foute prijzen op de site'" style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" />
+            <button onclick="searchKB()" style="padding: 10px 20px; cursor: pointer;">Zoeken</button>
+        </div>
+
+        <div id="kb-loading" style="display:none; margin-bottom: 15px; font-weight: 500;">AI is aan het zoeken...</div>
+        
+        <div id="kb-results" style="display:none;">
+            <h3 style="margin-top: 0;">Oplossing / Antwoord:</h3>
+            <div id="kb-answer" style="background: #f0f4f8; padding: 15px; border-radius: 5px; margin-bottom: 20px;"></div>
+
+            <h3></h3>Relevante Incidenten:</h3>
+            <div id="kb-sources"></div>
+        </div>
+    </dialog>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

@@ -584,3 +584,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+async function searchKB() {
+  const query = document.getElementById('kb-query').value;
+  if (!query) return;
+
+  document.getElementById('kb-loading').style.display = 'block';
+  document.getElementById('kb-results').style.display = 'none';
+
+  const response = await fetch('/search_kb', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query: query })
+  });
+
+  const data = await response.json();
+  document.getElementById('kb-loading').style.display = 'none';
+
+  if (data.error) {
+    alert(data.error);
+    return;
+  }
+
+  document.getElementById('kb-answer').innerText = data.answer;
+  
+  const sourcesContainer = document.getElementById('kb-sources');
+  sourcesContainer.innerHTML = '';
+  
+  data.sources.forEach(src => {
+    const card = document.createElement('div');
+    card.style.border = '1px solid #ddd';
+    card.style.padding = '10px';
+    card.style.marginBottom = '10px';
+    card.innerHTML = `<strong>${src.number}</strong> - ${src.short_description}<br><small><b>Oplossing:</b> ${src.close_notes || 'Geen notitie'}</small>`;
+    sourcesContainer.appendChild(card);
+  });
+
+  document.getElementById('kb-results').style.display = 'block';
+}

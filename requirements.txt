@@ -1,9 +1,2 @@
 Flask>=3.0,<4.0
 gunicorn>=23.0,<24.0
-langchain-community
-langchain-core
-langchain-huggingface
-faiss-cpu
-sentence-transformers
---extra-index-url https://download.pytorch.org/whl/cpu
-torch

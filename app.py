@@ -7,23 +7,11 @@ import re
 from datetime import date, datetime
 from typing import Any
 
-from flask import Flask, render_template, request, jsonify
-
-# --- GRATIS & LOKALE AI IMPORTS (HuggingFace + FAISS) ---
-from langchain_community.vectorstores import FAISS
-from langchain_core.documents import Document
-from langchain_huggingface import HuggingFaceEmbeddings  
+from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 25 * 1024 * 1024
-
-# Globale variabele om het AI-geheugen (vectorstore) in op te slaan
-vectorstore_holder: dict[str, Any] = {"store": None}
-
-# Initialiseer het HuggingFace Embedding model (draait lokaal & gratis op de CPU)
-# Dit model zet teksten om in betekenisvolle vectoren voor slim zoeken
-embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 ISSUE_CODE_PATTERN = re.compile(r"\bSPO-\d+\b", re.IGNORECASE)
 SLO_DAYS_BY_PRIORITY = {
@@ -39,6 +27,7 @@ def parse_record_date(value: Any) -> date | None:
     if not raw:
         return None
 
+    # Try the most common CSV export formats from SPO/SNOW first.
     formats = (
         "%Y-%m-%d",
         "%Y-%m-%d %H:%M:%S",
@@ -143,7 +132,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "spo_priority": spo_priority,
                 "spark_priority": spark_priority,
                 "summary": spo_record.get("Samenvatting", "") or spo_record.get("Summary", ""),
-                "status": spo_record.get("Status", "") or spo_record.get("State", ""),
+                "status": spo_record.get("Status", "") or spo_record.get("Status", "") or spo_record.get("State", ""),
                 "created": spo_record.get("Aangemaakt", "") or spo_record.get("Created", ""),
                 "created_display": format_display_date(spo_record.get("Aangemaakt") or spo_record.get("Created")),
                 "created_days": created_days,
@@ -166,30 +155,6 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
             }
         )
     return matches
-
-
-# --- LOKALE VECTORSTORE OPBOUWEN ---
-def build_vector_store(snow_records: list[dict[str, Any]]):
-    """Zet SNOW-records om naar doorzoekbare vector-documenten via HuggingFace."""
-    docs = []
-    for rec in snow_records:
-        content = (
-            f"Omschrijving: {rec.get('short_description', '')}\n"
-            f"Categorie: {rec.get('category', '')}\n"
-            f"Oplossing: {rec.get('close_notes', '')}"
-        )
-        metadata = {
-            "number": rec.get("number", "Onbekend"),
-            "short_description": rec.get("short_description", ""),
-            "close_notes": rec.get("close_notes", ""),
-            "category": rec.get("category", ""),
-            "resolved_by": rec.get("resolved_by", ""),
-        }
-        docs.append(Document(page_content=content, metadata=metadata))
-
-    if docs:
-        # Bouw de vector-database lokaal op
-        vectorstore_holder["store"] = FAISS.from_documents(docs, embeddings)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -223,10 +188,6 @@ def index():
             try:
                 snow_records = load_records(snow_file)
                 snow_loaded = True
-                
-                # --- Indexeer de SNOW-data automatisch lokaal ---
-                build_vector_store(snow_records)
-
             except (ValueError, csv.Error, UnicodeDecodeError) as exc:
                 error = f"{error} SNOW-upload mislukt: {exc}" if error else f"SNOW-upload mislukt: {exc}"
 
@@ -261,52 +222,7 @@ def index():
         snow_status="success" if snow_loaded else "error" if request.method == "POST" else "pending",
         matched_count=sum(1 for match in matches if match["has_snow_match"]),
         unmatched_count=sum(1 for match in matches if not match["has_snow_match"]),
-        kb_active=vectorstore_holder["store"] is not None
     )
-
-
-# --- LOKALE ZOEK-ENDPOINT ---
-@app.route("/search_kb", methods=["POST"])
-def search_kb():
-    if not vectorstore_holder["store"]:
-        return jsonify({"error": "Er is nog geen SNOW CSV geïndexeerd. Upload eerst een bestand."}), 400
-
-    data = request.get_json() or {}
-    query = data.get("query", "").strip()
-    if not query:
-        return jsonify({"error": "Geen zoekopdracht opgegeven."}), 400
-
-    vectorstore = vectorstore_holder["store"]
-
-    # Zoek de top 4 meest relevante incidenten op basis van de betekenis van de zoekopdracht
-    docs = vectorstore.similarity_search(query, k=5)
-
-    results = []
-    close_notes_list = []
-
-    for doc in docs:
-        close_notes = (doc.metadata.get("close_notes") or "").strip()
-
-        results.append({
-            "number": doc.metadata.get("number"),
-            "short_description": doc.metadata.get("short_description"),
-            "close_notes": close_notes,
-            "category": doc.metadata.get("category"),
-            "content": doc.page_content
-        })
-
-        if close_notes:
-            close_notes_list.append(close_notes)
-
-    if close_notes_list:
-        answer = close_notes_list[0]
-    else:
-        answer = "Geen directe oplossing gevonden in de relevante incidenten."
-
-    return jsonify({
-        "answer": answer,
-        "sources": results
-    })
 
 
 if __name__ == "__main__":

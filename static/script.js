@@ -134,7 +134,7 @@ function updateUnmatchedRows() {
     table
         .querySelectorAll('tbody tr[data-snow-match="0"]')
         .forEach(row => {
-            row.hidden = !unmatchedToggle.checked;
+            row.hidden = unmatchedToggle.checked;
         });
 }
 

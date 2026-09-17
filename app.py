@@ -142,6 +142,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
                 "slo_within_target": within_slo,
                 "slo_color_class": slo_color_class,
                 "updated": format_display_date(spo_record.get("Bijgewerkt", "") or spo_record.get("Updated", "")),
+                "reporter": spo_record.get("Melder", "") or spo_record.get("Reporter", ""),
                 "developer": spo_record.get("Ontwikkelaar", "") or spo_record.get("Creator", ""),
                 "snow_priority": snow_record.get("priority", "") if snow_record else "",
                 "tu_priority": normalize_tu_priority(snow_record.get("priority")) if snow_record else "-",

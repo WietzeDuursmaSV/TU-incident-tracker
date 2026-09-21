@@ -158,6 +158,7 @@ def build_matches(spo_records: list[dict[str, Any]], snow_records: list[dict[str
 
 
 @app.route("/", methods=["GET", "POST"])
+
 def index():
     matches: list[dict[str, Any]] = []
     error = ""
@@ -224,6 +225,9 @@ def index():
         unmatched_count=sum(1 for match in matches if not match["has_snow_match"]),
     )
 
+@app.route("/kanban")
+def kanban():
+    return render_template("kanban.html")   
 
 if __name__ == "__main__":
     app.run(

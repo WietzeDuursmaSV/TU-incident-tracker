@@ -621,3 +621,249 @@ async function searchKB() {
 
   document.getElementById('kb-results').style.display = 'block';
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const pills = document.querySelectorAll('.filter-pill');
+  const containers = document.querySelectorAll('.snow-container');
+
+  pills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      pills.forEach((p) => p.classList.remove('is-active'));
+      pill.classList.add('is-active');
+
+      const filter = pill.dataset.filter;
+
+      containers.forEach((container) => {
+        const matches = filter === 'all' || container.dataset.assignedTo === filter;
+        container.style.display = matches ? '' : 'none';
+      });
+    });
+  });
+});
+
+// ---------------------------------------------------------
+// Kanban filter op assigned_to
+// ---------------------------------------------------------
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const filterContainer = document.querySelector('#assigned-filter');
+    const containers = [
+        ...document.querySelectorAll('.snow-container')
+    ];
+
+    if (!filterContainer || !containers.length) {
+        return;
+    }
+
+
+    // -----------------------------------------------------
+    // Unieke toegewezen medewerkers ophalen
+    // -----------------------------------------------------
+
+    const assignedUsers = [
+        ...new Set(
+            containers
+                .map(container =>
+                    (container.dataset.assignedTo || '').trim()
+                )
+                .filter(Boolean)
+        )
+    ].sort((a, b) =>
+        a.localeCompare(b, 'nl')
+    );
+
+
+    // -----------------------------------------------------
+    // "Alle" filter
+    // -----------------------------------------------------
+
+    const allButton = document.createElement('button');
+
+    allButton.type = 'button';
+    allButton.className = 'filter-pill is-active';
+    allButton.dataset.filter = 'all';
+    allButton.textContent = 'Iedereen';
+
+    filterContainer.appendChild(allButton);
+
+
+    // -----------------------------------------------------
+    // Filterknoppen per medewerker
+    // -----------------------------------------------------
+
+    assignedUsers.forEach(user => {
+
+        const button = document.createElement('button');
+
+        button.type = 'button';
+        button.className = 'filter-pill';
+        button.dataset.filter = user;
+        button.textContent = user;
+
+        filterContainer.appendChild(button);
+    });
+
+
+    const pills = [
+        ...filterContainer.querySelectorAll('.filter-pill')
+    ];
+
+
+     // -----------------------------------------------------
+    // Filter toepassen
+    // -----------------------------------------------------
+
+    function applyFilter(filter) {
+
+        containers.forEach(container => {
+
+            const assignedTo =
+                (container.dataset.assignedTo || '').trim();
+
+            const matches =
+                filter === 'all' ||
+                assignedTo === filter;
+
+            container.style.display =
+                matches ? '' : 'none';
+        });
+
+
+        // Lege statussecties verbergen + tellers bijwerken
+        document
+            .querySelectorAll('.status-section')
+            .forEach(section => {
+
+                const visibleCards = [
+                    ...section.querySelectorAll('.snow-container')
+                ].filter(card =>
+                    card.style.display !== 'none'
+                );
+
+                section.style.display =
+                    visibleCards.length ? '' : 'none';
+
+                const countBadge =
+                    section.querySelector('.count-badge');
+
+                if (countBadge) {
+                    countBadge.textContent = visibleCards.length;
+                }
+            });
+    }
+
+    // -----------------------------------------------------
+    // Klik op filter
+    // -----------------------------------------------------
+
+    pills.forEach(pill => {
+
+        pill.addEventListener('click', () => {
+
+            pills.forEach(otherPill => {
+                otherPill.classList.remove('is-active');
+            });
+
+            pill.classList.add('is-active');
+
+            applyFilter(
+                pill.dataset.filter || 'all'
+            );
+        });
+    });
+
+
+    // -----------------------------------------------------
+    // Initieel alles tonen
+    // -----------------------------------------------------
+
+    applyFilter('all');
+});
+    // -----------------------------------------------------
+    // User initials in badges
+    // -----------------------------------------------------
+document.querySelectorAll('.user-badge').forEach(badge => {
+    const name = badge.textContent.trim();
+
+    if (!name || name === '—') {
+        return;
+    }
+
+    const parts = name.split(/\s+/);
+
+    if (parts.length >= 2) {
+        badge.textContent =
+            parts[0].charAt(0).toUpperCase() +
+            parts[parts.length - 1].charAt(0).toUpperCase();
+    } else {
+        badge.textContent = parts[0].charAt(0).toUpperCase();
+    }
+});
+
+// ---------------------------------------------------------
+// Incident detail dialoog
+// ---------------------------------------------------------
+
+const incidentDialog = document.getElementById('incident-dialog');
+
+if (incidentDialog) {
+    const dialogTitle = document.getElementById('incident-dialog-title');
+    const dialogLink = document.getElementById('incident-dialog-link');
+    const dialogPriority = document.getElementById('incident-dialog-priority');
+    const dialogState = document.getElementById('incident-dialog-state');
+    const dialogGroup = document.getElementById('incident-dialog-group');
+    const dialogAssigned = document.getElementById('incident-dialog-assigned');
+    const dialogSummary = document.getElementById('incident-dialog-summary');
+
+    const priorityClassByGroup = {
+        Kritiek: 'priority-critical',
+        Hoog: 'priority-high',
+        Gemiddeld: 'priority-medium',
+        Laag: 'priority-low',
+    };
+
+    function openIncidentDialog(card) {
+        const number = card.dataset.number || '';
+
+        dialogTitle.textContent = number || 'Incident';
+
+        if (number) {
+            dialogLink.textContent = number;
+            dialogLink.href = `https://soneparprod.service-now.com/incident.do?sysparm_query=number=${encodeURIComponent(number)}`;
+            dialogLink.hidden = false;
+        } else {
+            dialogLink.hidden = true;
+        }
+
+        const priorityGroup = card.dataset.priorityGroup || '';
+        dialogPriority.textContent = card.dataset.priority || '—';
+        dialogPriority.className = `priority ${priorityClassByGroup[priorityGroup] || ''}`.trim();
+
+        dialogState.textContent = card.dataset.state || '—';
+        dialogGroup.textContent = card.dataset.assignmentGroup || '—';
+        dialogAssigned.textContent = card.dataset.assignedTo || '—';
+        dialogSummary.textContent = card.dataset.summary || '—';
+
+        incidentDialog.showModal();
+    }
+
+    document.querySelectorAll('.snow-container[role="button"]').forEach(card => {
+        card.addEventListener('click', event => {
+            if (event.target.closest('a')) return; // laat de SNOW-link gewoon werken
+            openIncidentDialog(card);
+        });
+
+        card.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openIncidentDialog(card);
+            }
+        });
+    });
+
+    // Klik op de backdrop sluit de dialoog
+    incidentDialog.addEventListener('click', event => {
+        if (event.target === incidentDialog) incidentDialog.close();
+    });
+}

@@ -112,8 +112,13 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            box-shadow: 0 4px 4px rgba(0, 0, 0, .08);
+            box-shadow: 0 2px 2px rgba(0, 0, 0, .05);
             max-width: 280px;
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+        }
+        .snow-container:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, .15);
         }
 
         .snow-container:last-child {

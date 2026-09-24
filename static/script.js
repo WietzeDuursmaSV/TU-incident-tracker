@@ -867,3 +867,42 @@ if (incidentDialog) {
         if (event.target === incidentDialog) incidentDialog.close();
     });
 }
+
+// ---------------------------------------------------------
+// Incident date last updated
+// ---------------------------------------------------------
+
+function parseSnowDatum(tekst) {
+  tekst = tekst.trim();
+
+  // Formaat 1: jjjj-mm-dd uu:mm:ss (zoals in je screenshot)
+  let m = tekst.match(/^(\d{4})-(\d{1,2})-(\d{1,2})[ T]+(\d{1,2}):(\d{2}):(\d{2})$/);
+  if (m) {
+    return new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+  }
+
+  // Formaat 2: d-m-jjjj uu:mm:ss (dubbele spatie en geen voorloopnullen zijn ok)
+  m = tekst.match(/^(\d{1,2})-(\d{1,2})-(\d{4})\s+(\d{1,2}):(\d{2}):(\d{2})$/);
+  if (m) {
+    return new Date(+m[3], +m[2] - 1, +m[1], +m[4], +m[5], +m[6]);
+  }
+
+  return null;
+}
+
+function dagenGeleden(tekst) {
+  const datum = parseSnowDatum(tekst);
+  if (!datum) return null;
+  return Math.floor((Date.now() - datum) / 86400000);
+}
+
+document.querySelectorAll('.status-pill[data-updated]').forEach(el => {
+  const dagen = dagenGeleden(el.dataset.updated);
+  if (dagen === null) return; // onbekend formaat: originele tekst blijft staan
+
+  el.textContent = dagen === 0 ? '0'
+                 : dagen === 1 ? '1'
+                 : `${dagen}`;
+
+  if (dagen >= 7) el.classList.add('status-stale');
+});

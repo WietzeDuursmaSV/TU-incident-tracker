@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1>SPO-SNOW Incident Tracker</h1>
+    <h1>SNOW Incident Tracker</h1>
 
     <div class="upload">
         <form method="post" enctype="multipart/form-data">
@@ -72,10 +72,16 @@
             {% if incident.hold_reason %}
                 <span class="status-pill">{{ incident.hold_reason or '—' }}</span>
             {% endif %}
-            {% if incident.spo_issue_code %}
-              <span class="status-pill">{{ incident.spo_issue_code }}</span>
+            {% if incident.sys_updated_on %}
+            <span class="status-pill" data-updated="{{ incident.sys_updated_on }}" title="{{ incident.sys_updated_on }}">
+              {{ incident.sys_updated_on }}
+            </span>
             {% endif %}
-            <!-- <span class="status-pill">{{ incident.assignment_group or '—' }}</span> -->
+            {% if incident.spo_issue_code %}
+            <a href="https://sonepardigital.atlassian.net/browse/{{ incident.spo_issue_code }}" target="_blank" rel="noopener noreferrer" class="link-code">
+                <span class="status-pill">{{ incident.spo_issue_code }}</span>
+            </a>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}

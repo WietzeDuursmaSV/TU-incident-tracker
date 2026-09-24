@@ -89,14 +89,15 @@
                     <div class="form-footer">
                         <span id="file-status">Nog geen bestanden geselecteerd</span>
                         <div class="form-actions">
+                            <a href="{{ url_for('kanban') }}" class="">
+                                <span>Incidenten</span>
+                                <span class="btn-icon" aria-hidden="true">→</span>
+                            </a>
                             <button type="submit" class="btn-primary">
                                 <span>Toon matches</span>
                                 <span class="btn-icon" aria-hidden="true">↓</span>
                             </button>
-                            <a href="{{ url_for('kanban') }}" class="btn-primary">
-                                <span>Incidenten</span>
-                                <span class="btn-icon" aria-hidden="true">→</span>
-                            </a>
+                            
                         </div>
                     </div>
                 </form>

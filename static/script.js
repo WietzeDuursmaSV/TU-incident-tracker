@@ -817,10 +817,10 @@ if (incidentDialog) {
     const dialogSummary = document.getElementById('incident-dialog-summary');
 
     const priorityClassByGroup = {
-        Kritiek: 'priority-critical',
-        Hoog: 'priority-high',
-        Gemiddeld: 'priority-medium',
-        Laag: 'priority-low',
+        Kritiek: 'priority-critical priority-in-dialog',
+        Hoog: 'priority-high priority-in-dialog',
+        Gemiddeld: 'priority-medium priority-in-dialog',
+        Laag: 'priority-low priority-in-dialog',
     };
 
     function openIncidentDialog(card) {
@@ -896,13 +896,13 @@ function dagenGeleden(tekst) {
   return Math.floor((Date.now() - datum) / 86400000);
 }
 
-document.querySelectorAll('.status-pill[data-updated]').forEach(el => {
+document.querySelectorAll('.status-pill-days[data-updated]').forEach(el => {
   const dagen = dagenGeleden(el.dataset.updated);
   if (dagen === null) return; // onbekend formaat: originele tekst blijft staan
 
-  el.textContent = dagen === 0 ? '0'
-                 : dagen === 1 ? '1'
-                 : `${dagen}`;
+  el.textContent = dagen === 0 ? '0 days'
+                 : dagen === 1 ? '1 day'
+                 : `${dagen} days`;
 
   if (dagen >= 7) el.classList.add('status-stale');
 });

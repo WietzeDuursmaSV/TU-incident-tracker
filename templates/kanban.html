@@ -41,14 +41,14 @@
         {% if incident.number %}
           <div class="incident-header">
             
-                <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ incident.number }}"
+                <!-- <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ incident.number }}"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="snow-link"
-            >{{ incident.number }}</a>
+            >{{ incident.number }}</a> -->
 
             {% if incident.priority %}
-                <span class="priority
+                <span class="priority 
                     {% if incident.snow_priority_group == 'Kritiek' %}priority-critical
                     {% elif incident.snow_priority_group == 'Hoog' %}priority-high
                     {% elif incident.snow_priority_group == 'Gemiddeld' %}priority-medium
@@ -63,25 +63,32 @@
             <span class="text-muted">—</span>
         {% endif %}
 
-        <p title="{{ incident.short_description }}">
+        <p class="incident-summary" title="{{ incident.short_description }}">
             {{ incident.short_description or '—' }}
         </p>
 
         <div class="meta">
+          <div class="meta-left">
             <span class="user-badge">{{ incident.assigned_to or '—' }}</span>
-            {% if incident.hold_reason %}
+            <!-- {% if incident.hold_reason %}
                 <span class="status-pill">{{ incident.hold_reason or '—' }}</span>
-            {% endif %}
-            {% if incident.sys_updated_on %}
-            <span class="status-pill" data-updated="{{ incident.sys_updated_on }}" title="{{ incident.sys_updated_on }}">
-              {{ incident.sys_updated_on }}
-            </span>
-            {% endif %}
+            {% endif %} -->
+        
             {% if incident.spo_issue_code %}
             <a href="https://sonepardigital.atlassian.net/browse/{{ incident.spo_issue_code }}" target="_blank" rel="noopener noreferrer" class="link-code">
                 <span class="status-pill">{{ incident.spo_issue_code }}</span>
             </a>
             {% endif %}
+            </div>
+            <div class="meta-right">
+            <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ incident.number }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="snow-link">{{ incident.number }}</a>
+            {% if incident.sys_updated_on %}
+            <span class="status-pill-days" data-updated="{{ incident.opened_at }}"  data-updated-by="{{ incident.sys_updated_by }}" title="{{ incident.sys_updated_on }}"></span>
+            {% endif %}
+            </div>
         </div>
     </div>
 {% endmacro %}
@@ -180,7 +187,7 @@
             </div>
             <div class="dialog-row">
                 <span class="dialog-label">Prioriteit</span>
-                <span id="incident-dialog-priority" class="priority"></span>
+                <span id="incident-dialog-priority" class=" ** priority priority-dialog"></span>
             </div>
             <div class="dialog-row">
                 <span class="dialog-label">Status</span>

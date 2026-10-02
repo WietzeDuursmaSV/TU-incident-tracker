@@ -297,6 +297,8 @@ def _build_match_record(
         "snow_summary": snow_record.get("short_description", "") if snow_record else "",
         "snow_created": snow_record.get("sys_created_on", "") if snow_record else "",
         "snow_updated": snow_record.get("sys_updated_on", "") if snow_record else "",
+        "snow_opened_at": snow_record.get("opened_at", "") if snow_record else "***",
+        "snow_updated_by": snow_record.get("sys_updated_by", "") if snow_record else "",
         "snow_assigned_to": snow_record.get("assigned_to", "") if snow_record else "",
         "snow_number": snow_record.get("number", "") if snow_record else "",
         "snow_numbers": snow_numbers,

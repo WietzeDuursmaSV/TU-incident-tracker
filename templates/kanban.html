@@ -40,13 +40,7 @@
     >
         {% if incident.number %}
           <div class="incident-header">
-            
-                <!-- <a href="https://soneparprod.service-now.com/incident.do?sysparm_query=number={{ incident.number }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="snow-link"
-            >{{ incident.number }}</a> -->
-
+        
             {% if incident.priority %}
                 <span class="priority 
                     {% if incident.snow_priority_group == 'Kritiek' %}priority-critical

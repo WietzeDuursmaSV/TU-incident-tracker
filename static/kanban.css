@@ -188,6 +188,10 @@
             flex-wrap: wrap;
             justify-content: space-between;
         }
+        .meta-left {
+            display: flex;
+            align-items: flex-end;
+        }
         .meta-right { 
             display: flex;
             justify-content: flex-end;

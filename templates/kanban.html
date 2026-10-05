@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1>SNOW Incident Tracker</h1>
+    <h1>SNOW Incident Tracker ({{  snow_all_incidents|length }})</h1>
 
     <div class="upload">
         <form method="post" enctype="multipart/form-data">
@@ -31,6 +31,7 @@
         data-number="{{ incident.number or '' }}"
         data-priority="{{ incident.priority or '' }}"
         data-priority-group="{{ incident.snow_priority_group or '' }}"
+        data-spo-code="{{ incident.spo_issue_code or '' }}"
         data-summary="{{ incident.description or '' }}"
         data-state="{{ incident.state or '' }}"
         data-assignment-group="{{ incident.assignment_group or '' }}"
@@ -104,9 +105,31 @@
         </section>
     {% endmacro %}
     <div class="assigned-filter">
-        <span class="filter-label">Toegewezen aan:</span>
+        <div class="filter-row">
+            <span class="filter-label">Toegewezen aan:</span>
 
-        <div id="assigned-filter" class="filter-pills"></div>
+            <div id="assigned-filter" class="filter-pills"></div>
+
+            <button
+                id="spo-filter-toggle"
+                type="button"
+                class="filter-toggle"
+                aria-expanded="false"
+                aria-controls="spo-filter-panel"
+                title="Toon SPO-filters"
+            >
+                <span class="filter-toggle-icon">+</span>
+            </button>
+        </div>
+
+        <div
+            id="spo-filter-panel"
+            class="spo-filter-panel"
+            aria-hidden="true"
+        >
+
+            <div id="spo-filter" class="filter-pills"></div>
+        </div>
     </div>
     <main class="kanban">
 
@@ -203,6 +226,6 @@
     </form>
 </dialog>
     </main>
-      <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js', v='duplicate-spo-filter-1') }}"></script>
 </body>
 </html>

@@ -634,7 +634,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const filter = pill.dataset.filter;
 
       containers.forEach((container) => {
-        const matches = filter === 'all' || container.dataset.assignedTo === filter;
+       const matches =
+        filter === 'all' ||
+        assignedTo === filter 
         container.style.display = matches ? '' : 'none';
       });
     });
@@ -648,6 +650,9 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
 
     const filterContainer = document.querySelector('#assigned-filter');
+    const spoFilterContainer = document.querySelector('#spo-filter');
+    const spoFilterToggle = document.querySelector('#spo-filter-toggle');
+    const spoFilterPanel = document.querySelector('#spo-filter-panel');
     const containers = [
         ...document.querySelectorAll('.snow-container')
     ];
@@ -673,6 +678,16 @@ document.addEventListener('DOMContentLoaded', () => {
         a.localeCompare(b, 'nl')
     );
 
+    const spoCounts = new Map();
+
+    containers.forEach(container => {
+        const spoCode = (container.dataset.spoCode || '').trim();
+
+        if (spoCode) {
+            spoCounts.set(spoCode, (spoCounts.get(spoCode) || 0) + 1);
+        }
+    });
+
 
     // -----------------------------------------------------
     // "Alle" filter
@@ -686,6 +701,24 @@ document.addEventListener('DOMContentLoaded', () => {
     allButton.textContent = 'Iedereen';
 
     filterContainer.appendChild(allButton);
+   
+
+    const duplicateSpoCodes = [...spoCounts.entries()]
+        .filter(([, count]) => count > 1)
+        .sort(([leftCode], [rightCode]) =>
+            leftCode.localeCompare(rightCode, 'nl')
+        );
+
+    duplicateSpoCodes.forEach(([spoCode, count]) => {
+        const button = document.createElement('button');
+
+        button.type = 'button';
+        button.className = 'filter-pill';
+        button.dataset.filter = `spo:${spoCode}`;
+        button.textContent = `${spoCode} (${count})`;
+
+        spoFilterContainer.appendChild(button);
+    });
 
 
     // -----------------------------------------------------
@@ -706,8 +739,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const pills = [
-        ...filterContainer.querySelectorAll('.filter-pill')
+        ...filterContainer.querySelectorAll('.filter-pill'), 
+        ...spoFilterContainer.querySelectorAll('.filter-pill')
     ];
+
+    function setSpoPanelOpen(isOpen) {
+
+        if (!spoFilterToggle || !spoFilterPanel) {
+            return;
+        }
+
+        spoFilterToggle.setAttribute('aria-expanded', String(isOpen));
+        spoFilterPanel.classList.toggle('is-open', isOpen);
+        spoFilterPanel.setAttribute('aria-hidden', String(!isOpen));
+    }
 
 
      // -----------------------------------------------------
@@ -720,10 +765,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const assignedTo =
                 (container.dataset.assignedTo || '').trim();
+            const spoCode =
+                (container.dataset.spoCode || '').trim();
 
             const matches =
                 filter === 'all' ||
-                assignedTo === filter;
+                assignedTo === filter ||
+               (filter.startsWith('spo:') && spoCode === filter.slice(4));
 
             container.style.display =
                 matches ? '' : 'none';
@@ -742,7 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
 
                 section.style.display =
-                    visibleCards.length ? '' : 'none';
+                    visibleCards.length ? '' : 'block';
 
                 const countBadge =
                     section.querySelector('.count-badge');
@@ -770,7 +818,19 @@ document.addEventListener('DOMContentLoaded', () => {
             applyFilter(
                 pill.dataset.filter || 'all'
             );
+
+            if ((pill.dataset.filter || '').startsWith('spo:')) {
+                setSpoPanelOpen(true);
+            }
         });
+    });
+
+    spoFilterToggle?.addEventListener('click', () => {
+
+        const isOpen =
+            spoFilterToggle.getAttribute('aria-expanded') === 'true';
+
+        setSpoPanelOpen(!isOpen);
     });
 
 
@@ -778,6 +838,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initieel alles tonen
     // -----------------------------------------------------
 
+    setSpoPanelOpen(false);
     applyFilter('all');
 });
     // -----------------------------------------------------

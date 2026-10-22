@@ -13,20 +13,67 @@
     <h1>SNOW Incident Tracker ({{  snow_all_incidents|length }})</h1>
 
     <div class="upload">
-        <form method="post" enctype="multipart/form-data">
-            <label for="snow_file">SNOW CSV:</label>
-            <input id="snow_file" type="file" name="snow_file" accept=".csv" required>
-            <button type="submit">Upload</button>
-        </form>
-
-        {% if error %}
+        <div class="upload-section-left">
+            <form method="post" enctype="multipart/form-data">
+                <label for="snow_file">SNOW CSV:</label>
+                <input id="snow_file" type="file" name="snow_file" accept=".csv" required>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+        <div class="upload-section-right">
+            <form method="post" action="{{ url_for('kanban_refresh') }}" class="refresh-form">
+                <button type="submit" class="refresh-button">Ververs lokale status</button>
+            </form>
+            
+            <!-- {% if generated_csv_info %}
+            <div class="generated-csv-note">
+                {{ generated_csv_name or 'incident.csv' }} · {{ generated_csv_info }}
+            </div>
+            {% else %}
+            <div class="generated-csv-note is-empty">
+                Lokale automatische CSV nog niet geladen.
+            </div>
+            {% endif %} -->
+            
+            {% if error %}
             <div class="error">{{ error }}</div>
-        {% endif %}
+            {% endif %}
+            
+            {% if info %}
+            <div class="generated-csv-note">{{ info }}</div>
+            {% endif %}
+
+            {% if not has_local_session %}
+            <form method="post" action="{{ url_for('kanban_connect') }}" class="refresh-form">
+                <button type="submit" class="refresh-button connect-button">Connect</button>
+            </form>
+            {% else %}
+            <div class="connection-row">
+                <span class="connection-status">Verbonden</span>
+               <form method="post" action="{{ url_for('kanban_disconnect') }}" class="refresh-form">
+                    <button type="submit" class="refresh-button disconnect-button">X</button>
+            </form>
+            </div>
+            {% endif %}
+        </div>
     </div>
 
    {% macro incident_card(incident) %}
+    {% set state_value = (incident.state or '')|trim %}
+    {% set hold_reason = (incident.hold_reason or '')|trim %}
+    {% set hold_reason_lower = (hold_reason|lower)|replace('  ', ' ') %}
+    {% set hold_indicator_class = '' %}
+    {% if state_value == 'In afwachting' %}
+        {% if hold_reason_lower in ['externe derde partij', 'externe 3de partij', '3de partij'] %}
+            {% set hold_indicator_class = 'hold-indicator--blue' %}
+        {% elif hold_reason_lower == 'melder' %}
+            {% set hold_indicator_class = 'hold-indicator--green' %}
+        {% elif hold_reason_lower == 'probleem' %}
+            {% set hold_indicator_class = 'hold-indicator--red' %}
+        {% endif %}
+    {% endif %}
     <div
-        class="snow-container"
+        class="snow-container{% if hold_indicator_class %} {{ hold_indicator_class }}{% endif %}"
         data-assigned-to="{{ incident.assigned_to or '' }}"
         data-number="{{ incident.number or '' }}"
         data-priority="{{ incident.priority or '' }}"
@@ -38,19 +85,21 @@
         role="button"
         tabindex="0"
         aria-haspopup="dialog"
+        {% if hold_indicator_class %}title="{{ hold_reason }}"{% endif %}
     >
         {% if incident.number %}
           <div class="incident-header">
-        
             {% if incident.priority %}
-                <span class="priority 
-                    {% if incident.snow_priority_group == 'Kritiek' %}priority-critical
-                    {% elif incident.snow_priority_group == 'Hoog' %}priority-high
-                    {% elif incident.snow_priority_group == 'Gemiddeld' %}priority-medium
-                    {% elif incident.snow_priority_group == 'Laag' %}priority-low
-                    {% endif %}
-                ">
-                    {{ incident.priority }}
+                <span class="incident-priority-wrap">
+                    <span class="priority 
+                        {% if incident.snow_priority_group == 'Kritiek' %}priority-critical
+                        {% elif incident.snow_priority_group == 'Hoog' %}priority-high
+                        {% elif incident.snow_priority_group == 'Gemiddeld' %}priority-medium
+                        {% elif incident.snow_priority_group == 'Laag' %}priority-low
+                        {% endif %}
+                    ">
+                        {{ incident.priority }}
+                    </span>
                 </span>
             {% endif %}
           </div>
@@ -201,6 +250,10 @@
             <div class="dialog-row">
                 <span class="dialog-label">Nummer</span>
                 <a id="incident-dialog-link" class="snow-link" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+             <div class="dialog-row">
+                <span class="dialog-label">SPO</span>
+                <a id="incident-dialog-spo" class="snow-link" target="_blank" rel="noopener noreferrer"></a>
             </div>
             <div class="dialog-row">
                 <span class="dialog-label">Prioriteit</span>

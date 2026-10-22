@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import csv
 import io
+import importlib.util
 import os
 import re
 from collections import defaultdict
 from datetime import date, datetime
 from functools import lru_cache
+from pathlib import Path
 from typing import Any, Callable
 
 from flask import Flask, render_template, request
@@ -62,6 +64,79 @@ snow_store_holder: dict[str, dict[str, list[dict[str, Any]]]] = {
     "grouped": {group: [] for group in SNOW_PRIORITY_GROUPS}
 }
 
+GENERATED_SNOW_CSV = Path("incident.csv")
+SESSION_STATE_PATH = Path("sessie.json")
+
+
+def _now_display() -> str:
+    return datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+
+
+def _format_generated_csv_info(path: Path) -> str:
+    if not path.exists():
+        return ""
+
+    updated_at = datetime.fromtimestamp(path.stat().st_mtime)
+    return f"Automatisch gegenereerde CSV geladen om {updated_at.strftime('%d-%m-%Y %H:%M:%S')}"
+
+
+def _clear_local_session() -> None:
+    if SESSION_STATE_PATH.exists():
+        SESSION_STATE_PATH.unlink()
+
+
+def _get_fetch_incidents():
+    uitlezen_path = Path(__file__).with_name("2_uitlezen.py")
+    uitlezen_spec = importlib.util.spec_from_file_location("uitlezen_module", uitlezen_path)
+
+    if uitlezen_spec is None or uitlezen_spec.loader is None:
+        raise RuntimeError("Kan 2_uitlezen.py niet laden.")
+
+    uitlezen_module = importlib.util.module_from_spec(uitlezen_spec)
+    uitlezen_spec.loader.exec_module(uitlezen_module)
+    return uitlezen_module.fetch_incidents
+
+
+def _get_save_session_state():
+    inloggen_path = Path(__file__).with_name("1_inloggen.py")
+    inloggen_spec = importlib.util.spec_from_file_location("inloggen_module", inloggen_path)
+
+    if inloggen_spec is None or inloggen_spec.loader is None:
+        raise RuntimeError("Kan 1_inloggen.py niet laden.")
+
+    inloggen_module = importlib.util.module_from_spec(inloggen_spec)
+    inloggen_spec.loader.exec_module(inloggen_module)
+    return inloggen_module.save_session_state
+
+
+def _has_valid_local_session() -> bool:
+    if not SESSION_STATE_PATH.exists():
+        return False
+
+    try:
+        inloggen_path = Path(__file__).with_name("1_inloggen.py")
+        inloggen_spec = importlib.util.spec_from_file_location("inloggen_module", inloggen_path)
+
+        if inloggen_spec is None or inloggen_spec.loader is None:
+            return False
+
+        inloggen_module = importlib.util.module_from_spec(inloggen_spec)
+        inloggen_spec.loader.exec_module(inloggen_module)
+        is_valid = bool(inloggen_module.is_session_state_valid(SESSION_STATE_PATH))
+    except Exception:
+        return False
+
+    if not is_valid:
+        _clear_local_session()
+
+    return is_valid
+
+
+def _session_status_info(has_local_session: bool) -> str:
+    if has_local_session:
+        return "Verbonden met ServiceNow."
+    return "Sessie verlopen of ongeldig. Klik op Connect om opnieuw in te loggen."
+
 
 def empty_snow_grouped() -> dict[str, list[dict[str, Any]]]:
     return {group: [] for group in SNOW_PRIORITY_GROUPS}
@@ -102,18 +177,26 @@ def format_display_date(value: Any) -> str:
 def load_records(upload: Any) -> list[dict[str, Any]]:
     """Load a CSV upload, supporting UTF-8-sig and CP1252 encodings."""
     raw_data = upload.stream.read()
-
-    try:
-        text = raw_data.decode("utf-8-sig")
-    except UnicodeDecodeError:
-        text = raw_data.decode("cp1252")
-
-    records = list(csv.DictReader(io.StringIO(text), strict=True))
+    records = load_records_from_bytes(raw_data)
 
     if not records or not all(isinstance(item, dict) for item in records):
         raise ValueError("Het CSV-bestand moet een header en records bevatten.")
 
     return records
+
+
+def load_records_from_bytes(raw_data: bytes) -> list[dict[str, Any]]:
+    try:
+        text = raw_data.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        text = raw_data.decode("cp1252")
+
+    return list(csv.DictReader(io.StringIO(text), strict=True))
+
+
+def load_records_from_path(file_path: Path) -> list[dict[str, Any]]:
+    with open(file_path, "rb") as file_handle:
+        return load_records_from_bytes(file_handle.read())
 
 
 def normalize_issue_code(value: Any) -> str:
@@ -346,6 +429,16 @@ def _build_no_match_info(spo_records: list[dict[str, Any]], snow_records: list[d
     )
 
 
+def _load_generated_snow_snapshot() -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]], str, str]:
+    if not GENERATED_SNOW_CSV.exists():
+        return empty_snow_grouped(), [], "", ""
+
+    snow_records = load_records_from_path(GENERATED_SNOW_CSV)
+    snow_grouped = group_snow_records(snow_records)
+    snow_store_holder["grouped"] = snow_grouped
+    return snow_grouped, snow_records, GENERATED_SNOW_CSV.name, _format_generated_csv_info(GENERATED_SNOW_CSV)
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     matches: list[dict[str, Any]] = []
@@ -415,19 +508,139 @@ def index():
 @app.route("/kanban", methods=["GET", "POST"])
 def kanban():
     error = ""
+    info = ""
+    generated_csv_name = ""
+    generated_csv_info = ""
+
+    if GENERATED_SNOW_CSV.exists():
+        try:
+            snow_grouped, _, generated_csv_name, generated_csv_info = _load_generated_snow_snapshot()
+        except (ValueError, csv.Error, UnicodeDecodeError) as exc:
+            error = f"Automatisch laden van {GENERATED_SNOW_CSV.name} mislukt: {exc}"
+            snow_grouped = snow_store_holder["grouped"]
+    else:
+        snow_grouped = snow_store_holder["grouped"]
 
     if request.method == "POST":
         snow_file = request.files.get("snow_file")
 
         if snow_file and snow_file.filename:
-            _, kanban_records, error = process_kanban_snow_upload(snow_file)
+            snow_grouped, kanban_records, error = process_kanban_snow_upload(snow_file)
+            generated_csv_name = ""
+            generated_csv_info = ""
             if not error and not kanban_records:
                 error = "Geen SNOW-incidenten gevonden met assignment_group 'Chapter Commerce'."
         else:
             error = "Selecteer een geldig SNOW CSV-bestand."
 
-    context = build_snow_template_context(snow_store_holder["grouped"])
+    has_local_session = _has_valid_local_session()
+    context = build_snow_template_context(snow_grouped)
     context["error"] = error
+    context["info"] = info or _session_status_info(has_local_session)
+    context["generated_csv_name"] = generated_csv_name
+    context["generated_csv_info"] = generated_csv_info
+    context["has_local_session"] = has_local_session
+
+    return render_template("kanban.html", **context)
+
+
+@app.route("/kanban/refresh", methods=["POST"])
+def kanban_refresh():
+    error = ""
+    info = ""
+    generated_csv_name = ""
+    generated_csv_info = ""
+    has_local_session = _has_valid_local_session()
+
+    try:
+        fetch_incidents = _get_fetch_incidents()
+        rows = fetch_incidents()
+        snow_grouped, _, generated_csv_name, _ = _load_generated_snow_snapshot()
+        refreshed_at = _now_display()
+        generated_csv_info = f"Automatisch gegenereerde CSV ververst om {refreshed_at}"
+        info = f"Lokale status is ververst om {refreshed_at} ({len(rows)} incidenten)."
+        has_local_session = _has_valid_local_session()
+        if not has_local_session:
+            info = "Sessie verlopen of ongeldig. Klik op Connect om opnieuw in te loggen."
+    except SystemExit as exc:
+        error = str(exc)
+        snow_grouped = snow_store_holder["grouped"]
+        _clear_local_session()
+        has_local_session = False
+    except Exception as exc:
+        error = f"Verversen mislukt: {exc}"
+        snow_grouped = snow_store_holder["grouped"]
+
+    context = build_snow_template_context(snow_grouped)
+    context["error"] = error
+    context["info"] = info or _session_status_info(has_local_session)
+    context["generated_csv_name"] = generated_csv_name
+    context["generated_csv_info"] = generated_csv_info
+    context["has_local_session"] = has_local_session
+
+    return render_template("kanban.html", **context)
+
+
+@app.route("/kanban/connect", methods=["POST"])
+def kanban_connect():
+    error = ""
+    info = ""
+    generated_csv_name = ""
+    generated_csv_info = ""
+    has_local_session = _has_valid_local_session()
+
+    try:
+        save_session_state = _get_save_session_state()
+        fetch_incidents = _get_fetch_incidents()
+        save_session_state()
+        rows = fetch_incidents()
+        snow_grouped, _, generated_csv_name, _ = _load_generated_snow_snapshot()
+        refreshed_at = _now_display()
+        generated_csv_info = f"Automatisch gegenereerde CSV ververst om {refreshed_at}"
+        has_local_session = _has_valid_local_session()
+        if has_local_session:
+            info = f"Verbonden met ServiceNow. De sessie is opgeslagen en de lokale status is direct ververst ({len(rows)} incidenten)."
+        else:
+            info = "Sessie verlopen of ongeldig. Klik op Connect om opnieuw in te loggen."
+    except SystemExit as exc:
+        error = str(exc)
+        snow_grouped = snow_store_holder["grouped"]
+        _clear_local_session()
+        has_local_session = False
+    except Exception as exc:
+        error = f"Verbinden mislukt: {exc}"
+        snow_grouped = snow_store_holder["grouped"]
+
+    context = build_snow_template_context(snow_grouped)
+    context["error"] = error
+    context["info"] = info or _session_status_info(has_local_session)
+    context["generated_csv_name"] = generated_csv_name
+    context["generated_csv_info"] = generated_csv_info
+    context["has_local_session"] = has_local_session
+
+    return render_template("kanban.html", **context)
+
+
+@app.route("/kanban/disconnect", methods=["POST"])
+def kanban_disconnect():
+    error = ""
+    info = ""
+    generated_csv_name = ""
+    generated_csv_info = ""
+    snow_grouped = snow_store_holder["grouped"]
+
+    try:
+        _clear_local_session()
+        info = "Sessie uitgelogd. Klik op Connect om opnieuw in te loggen."
+    except Exception as exc:
+        error = f"Disconnecten mislukt: {exc}"
+
+    context = build_snow_template_context(snow_grouped)
+    context["error"] = error
+    context["info"] = info or _session_status_info(False)
+    context["generated_csv_name"] = generated_csv_name
+    context["generated_csv_info"] = generated_csv_info
+    context["has_local_session"] = False
 
     return render_template("kanban.html", **context)
 

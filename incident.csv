@@ -1,0 +1,463 @@
+"priority","number","business_service","cmdb_ci","state","hold_reason","assigned_to","short_description","opened_at","opened_by","caller_id","u_requested_by","assignment_group","u_vip_user","u_affected_countries","u_affected_companies","category","description","u_vendor_number","sys_updated_on","sys_updated_by","resolved_at","resolved_by","close_code","close_notes"
+"1 - Kritiek","INC1973359","NL - Technischeunie.nl","Klant/Account - Overige","In afwachting","Externe derde partij","Masood Jan","SPO-9367 Debiteur 1311406, blijft card-apporval autorisaties terug vallen naar 'deactivated'","2026-10-07 12:16:25","Simone Weggeman","Simone Weggeman","Simone Weggeman","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Eerder gemeld in INC1929270
+Dit was SPO-9013
+
+Klant wordt er wanhopig van.
+Eerst van het gebruiker Stefan. 
+Nu is het Tim de Knikker waar het zelf bestellen uit is geschakeld.
+
+Klant is zeer geirriteerd, vooral omdat er geen heldere verklaring voor is.","","2026-10-22 07:29:02","system","","","",""
+"1 - Kritiek","INC1810750","NL - Verkoop Applicaties","SPARK CX","In afwachting","Externe derde partij","Kamiel Habets","[SPO-8471] SPARK naar SAP interface I0187 Pay open invoice by Ideal - missende iDOCS","2026-07-13 12:40:34","Annemieke Klein","Annemieke Klein","Annemieke Klein","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Software","Betreft interface I0187 Pay open invoice by Ideal. Voor de volgende Id's lijken geen iDOCs te zijn aangemaakt (we zien geen iDOCs in SAP, ook niet in error) vanuit SPARK naar SAP. We hebben wel de betaling van Worldline binnen. 
+755245812129964032 - betaald op 1 juli - betreft facturen 639376903 639357165 639369824
+746855400899608576 - betaald op 8 juni
+
+Graag error analyse van bijvoorbeeld Matthew Duijs die was betrokken bij ontwikkeling. 
+
+Gelinkt aan INC1790251 waar SAP in onderzocht, zie bijlage.","","2026-10-22 09:12:20","system","","","",""
+"1 - Kritiek","INC1927434","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Externe derde partij","Kamiel Habets","[SPO-8460] Shopping cart SPARK unavailable due to simulation timeout back-end — customer unable to complete order of 75 items (next-day delivery required)","2026-09-09 17:31:27","Erik Mutsaars","Erik Mutsaars","Digitalcommerce NL_TU_ASV_MB_","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Website (SPARK) shopping cart functionality + associate portal (cart view)
+
+The customer SPARK ID 3641784 carefully searched for and selected 75 items on the website to prepare for a project starting the following day, and added them to his shopping cart. 
+He wishes to order these for next-day delivery.
+
+However, the shopping cart is no longer visible/accessible SPARK.
+The cause appears to be a timeout in the simulation front-end<>backend , which is blocking cart availability while awaiting a response from the backend.
+
+Impact:
+
+The customer Jansen Huybregts Onderhoud Renovatie BV SPARK ID 3641784 user d.zwegers@jansen-huybregts.nl can no longer view the selected items or complete the order. All of the customer's search preparation time has been wasted...
+Internal Customer Service Technische Unie are also unable to view or complete the cart via the associate portal — meaning no workaround is currently available.
+
+Business impact:
+This is a production-blocking issue for the customer: 
+He will be unable to start his project on time due to the delivery delay. 
+This puts the reliability of our service at risk and could result in customer churn if not resolved promptly.
+
+Steps to reproduce / Observed behavior:
+
+Customer adds items (75x) to the shopping cart on the website.
+Upon returning to the cart, a timeout occurs in the simulation/backend communication.
+The shopping cart fails to load/display — for neither the customer or customer service  via the associate portal.
+
+Requested action:
+Urgent investigation into the backend timeout in the cart simulation, and restoration of cart access, so the customer SPARK ID 3641784  user d.zwegers@jansen-huybregts.nl can still place the order (75 items) in time for next-day delivery.","","2026-10-22 07:48:42","system","","","",""
+"1 - Kritiek","INC1992549","NL - Technischeunie.nl","Klant/Account - Probleem aanmaken account","In afwachting","Melder","Shinod Kharim","(SPO-9512) Klantnummer niet zichtbaar in associate portal","2026-10-19 15:38:34","Francois Devriesere","Francois Devriesere","Francois Devriesere","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klantnummer niet zichtbaar in associate portal","","2026-10-22 07:47:01","system","","","",""
+"2 - Hoog","INC1997305","NL - Technischeunie.nl","Bestellen - Winkelwagen niet afronden","In uitvoering","","Arslan Bekdur","Winkelwagen is niet zichtbaar ","2026-10-21 13:44:07","Jantine de Heus","Jantine de Heus","Jantine de Heus","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Winkelwagen is niet zichtbaar","","2026-10-21 13:45:35","a.bekdur","","","",""
+"2 - Hoog","INC1987985","ZZ  OLD NL - Technischeunie.nl","Adres wijziging(en)","In afwachting","Externe derde partij","Arslan Bekdur","adressen staan weer vast","2026-10-15 15:31:52","Ronald Van Der Giesen","Ronald Van Der Giesen","Ronald Van Der Giesen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","klantnummer 4081378
+gebruiker Kevin van Gelder
+
+pas geleden hebben jullie ook al de adressen verwijderd die vast staan.
+Toen hebben wij er alles goed ingezet en de klant heeft niks aangepast en weer staan er 5 adressen zat.
+
+Kunnen jullie dit weer oplossen.
+Klanten zijn het echt zat dat het elke keer gebeurd.","","2026-10-15 15:40:39","a.bekdur","","","",""
+"2 - Hoog","INC1968486","NL - Technischeunie.nl","Bestellen - Winkelwagen niet afronden","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9278 Min Plus knopbij kabellengte werkt verkeerd om","2026-10-05 12:42:44","Ben Van Den Berg","Ben Van Den Berg","Ben Van Den Berg","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Als bij kabel de lengte wil aanpassen , werken de Min en Plus lnoppen verkeerd om. De Plus telt af en de Min telt op","","2026-10-05 12:55:37","a.bekdur","","","",""
+"2 - Hoog","INC1924321","NL - Technischeunie.nl","Order & Factuur - Retouren / Reparaties","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8984 Klant 8751604 kan geen retouren/garantie aanmelden op de website.","2026-09-08 14:52:38","Francois Devriesere","Francois Devriesere","Francois Devriesere","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant 8751604 kan geen retouren/garantie aanmelden op de website. Via meerdere gebruikers geprobeerd, maar lukt niet","","2026-09-09 11:55:14","a.bekdur","","","",""
+"2 - Hoog","INC1977967","ZZ  OLD NL - Technischeunie.nl","Offertes/ Orders/ facturen","In afwachting","Externe derde partij","Craig Matthew","[SPO-9371] Referentie niet zichtbaar bij de facturen","2026-10-09 14:48:05","Ronald Van Der Giesen","Ronald Van Der Giesen","Ronald Van Der Giesen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klantnummer 1644152
+
+Referentie wordt wel op de order meegegeven en is ook te zien als je de factuur download. Maar in het scherm niet.
+dit gebeurd alleen bij balieorders. zie printscreen","","2026-10-12 07:58:48","system","","","",""
+"2 - Hoog","INC1958071","NL-TU_Algemene registratie","Algemene registratie","In uitvoering","","Ajith Padmanabhan","Probleem bijwerken code Tumenu","2026-09-29 10:27:51","Wouter Lustig","Wouter Lustig","Colin Stolwijk","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Software","Zie de bijgevoegde mail van Colin. Ron Eekman geeft aan dat deze opgepakt kan worden door het server team.","","2026-10-01 13:58:53","a.bekdur","","","",""
+"2 - Hoog","INC1977770","NL - Technischeunie.nl","Mobiele app - Niet kunnen inloggen","In afwachting","Externe derde partij","Craig Matthew","[SPO-9368] Klant kan niet inloggen op de app (Deb 3400447, Roel Wiersema)","2026-10-09 13:36:06","Jantine de Heus","Jantine de Heus","Jantine de Heus","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant kan niet inloggen op de app, zie melding op de schermafbeelding","","2026-10-16 07:37:01","c.matthew","","","",""
+"2 - Hoog","INC1927007","NL-TU_S2S","XML ordering","In uitvoering","","Ajith Padmanabhan","Mesageservice3.1 verzending van Hanab geeft issues","2026-09-09 15:37:46","Martin Manhave","Martin Manhave","Martin Manhave","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Hanab gebruikt al geruime tijd de MS3.1 
+diverse klantnummers van hanab werken zoals het hoort, maar er is 1 klantnummer dat issues vertoont.
+klant: 2100865 
+Dit klantnummer kan soms wel, soms niet verzenden. 
+terwijl de Credentials juist zijn krijgen ze een 121 Authenticatie error, credentials onjuist.
+
+Ik heb dit klantnummer zelf getest, en een aantal keren verbinding kunnen maken, zonder problemen, 
+maar dan in eens krijg ik ook deze  fout melding melding. 
+11:52 -- screenshot 121 melding
+12:52 - Screenshot, geen issue 
+
+Het vreemde is dat het soms welk lukt, en vaak dan weer daarna niet.  zonder dat ik de credentials wijzig.
+waar kan dit aan liggen?","","2026-09-17 19:43:48","r.blankestijn","","","",""
+"2 - Hoog","INC1956398","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9181   Bug – Unable to Edit Public Product Lists Created by Colleagues","2026-09-28 15:49:44","Rik Brandhorst","Rik Brandhorst","Rik Brandhorst","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Users are unable to add, remove, or modify products in a public product list when the list was created by another colleague.
+
+This occurs even when the user has the required permissions to edit public lists (EDIT_PUBLIC_LIST) or has administrator rights within the customer account.
+
+Steps to Reproduce
+- User A creates a product list.
+Set the list visibility to Public.
+- User B, within the same customer account, opens the public list.
+- User B has EDIT_PUBLIC_LIST authorization or administrator rights.
+- User B attempts to add, remove, or modify a product in the list.
+Actual Behaviour
+
+User B is unable to add  product to the list, despite having the required authorization or administrator rights.
+
+Expected Behaviour
+
+Users with EDIT_PUBLIC_LIST authorization or administrator rights should be able to add, remove, and modify products in public product lists, regardless of which colleague originally created the list.
+
+Customer Impact
+
+This prevents colleagues from effectively collaborating on shared product lists and can result in unnecessary duplication of lists, inconsistent list management, and support requests.
+
+Documentation SPARK
+https://sonepardigital.atlassian.net/wiki/spaces/DFSP/pages/3271196673/List+management+Sharing","","2026-09-28 16:02:00","a.bekdur","","","",""
+"2 - Hoog","INC1994509","NL - Technischeunie.nl","Overige - Open vraag","In uitvoering","","Arslan Bekdur","Klant wilt weten door wie deze contactpersonen zijn aangemaakt fred de groot, hardy adihardjo en Roos Twaalfhoven  volgens aaron bieleveld kunne jullie mij deze","2026-10-20 09:52:27","Sarah Hermans","Sarah Hermans","Sarah Hermans","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant wilt weten door wie deze contactpersonen zijn aangemaakt fred de groot, hardy adihardjo en Roos Twaalfhoven 
+volgens aaron bieleveld kunne jullie mij deze informatie verstrekken","","2026-10-21 15:22:17","a.bekdur","","","",""
+"2 - Hoog","INC1980102","NL - Technischeunie.nl","Klant/Account - Overige","In afwachting","Melder","Wietze Duursma","SPO-9029 Klant kan niet inloggen","2026-10-12 10:28:08","Rick Fleuren","Rick Fleuren","Rick Fleuren","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant kan niet inloggen. Heeft het al geprobeerd met wachtwoord vergeten en de verificatiecode, en krijgt de verificatiecode wel, maar als deze wordt ingevuld, dan verschijnt de melding dat deze gebruiker niet actief is.
+Klantnummer 1502624, gebruiker ""info@hotelkleinzwitserland.nl"", FH Klein Zwitserland.","","2026-10-20 09:57:50","w.duursma","","","",""
+"2 - Hoog","INC1820329","NL - Technischeunie.nl","Bestellen - Winkelwagen niet afronden","In afwachting","Externe derde partij","Kamiel Habets","[SPO-8460] Foutmeldingen bij winkelwagen ophalen reeds bekend bij kamiel arslan shinod ajith","2026-07-17 12:26:52","Frank Buiting","Frank Buiting","Frank Buiting","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Foutmeldingen bij winkelwagen ophalen via een erp systeem.
+In het voorbeeld hebben we klant 1728492 gebruikt","","2026-08-19 10:16:59","k.habets","","","",""
+"2 - Hoog","INC1984626","NL-TU_ OLD Technische Unie App","Account issues","In afwachting","Externe derde partij","Craig Matthew","[SPO-9426] 3625126 Swinkels - Inloggen is op dit moment niet mogelijk - probeer het later opnieuw","2026-10-14 09:42:56","Cas Brienen","Cas Brienen","Cas Brienen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant Berry Swinkels 3625126 krijgt op de app telkens de melding ''Inloggen is op dit moment niet mogelijk - probeer het later opnieuw''. Hij werkt op een iPhone. Ik heb gecontroleerd of er geüpdatet moest worden, maar dit was niet het geval. 
+Bij het opnieuw opstarten van de app herkent hij wel het account/gebruiker. Daarna probeert de klant in te loggen via biometrie. Dit werkt überhaupt niet. Wanneer hij probeert in te loggen met zijn mail, krijgt hij dus de melding ''Inloggen is op dit moment niet mogelijk - probeer het later opnieuw''.
+
+Kunnen jullie ervoor zorgen dat de klant weer kan inloggen?","","2026-10-14 11:06:57","c.matthew","","","",""
+"2 - Hoog","INC1874361","ZZ  OLD NL - Technischeunie.nl","Berichtenservice","In afwachting","Externe derde partij","Shinod Kharim","(SPO-8345) als klant service berichten wil aanzetten dan krijgt hij foutmelding","2026-08-06 14:28:12","Erik Van Luipen","Erik Van Luipen","Erik Van Luipen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","bij het aanzetten van service berichten krijgt de klant een foutmelding. klantnummer 3034683. zie bijlage voor wat hij wil aanzetten","","2026-08-06 16:06:23","s.kharim","","","",""
+"2 - Hoog","INC1752453","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPM-12001 SPO-8528  Bestellijsten bewerken vanuit webselectie Syntess niet mogelijk.","2026-06-18 16:12:42","Janjaap Van De Wetering","Janjaap Van De Wetering","Janjaap Van De Wetering","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant 3206182 Wierda gaat vanuit webselectie naar eigen lijsten. Daar kan hij de aantallen niet wijzigen om in zijn winkelwagen te plaatsen. Dit kon voorheen op de oude website wel.
+
+[Customer 3206182 Wierda navigates from web selection to his own lists. There, he cannot change the quantities to add to his shopping cart. This was previously possible on the old website.]","","2026-09-23 15:53:28","a.bekdur","","","",""
+"2 - Hoog","INC1970911","ZZ  OLD NL - Technischeunie.nl","Winkelwagen/bestellen","In afwachting","Melder","Craig Matthew","Klant komt niet verder bij betaling","2026-10-06 13:19:29","Marriët Terlouw","Marriët Terlouw","Marriët Terlouw","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Andere","Klant 3035326 heeft winkelmandje en wanneer hij in het scherm komt voor betaling komt hij niet verder. Zowel bij Ideal als op rekening.","","2026-10-20 16:34:33","w.duursma","","","",""
+"2 - Hoog","INC1926208","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8982 2048866 Elektrobode gebruiker Nga-Yee Snippe kan geen retouren invoeren","2026-09-09 10:14:10","Bert Jan Feenstra","Bert Jan Feenstra","Bert Jan Feenstra","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Nadat ze alle regels heeft ingevuld met retour reden enzovoorts en ze wil verder klikken bij bevestigen dan spring hij weer terug naar het scherm (zie printscreen) ze kan niet eens tabblad 2 openen als ze een andere order wil zoeken. elke keer weer.","","2026-09-15 11:03:28","w.duursma","","","",""
+"2 - Hoog","INC1859171","NL - Technischeunie.nl","Order & Factuur - Retouren / Reparaties","In afwachting","Externe derde partij","Shinod Kharim","(SPO-8203) veel klanten krijgen bij het aanmelden van retouren de melding dat het maximale aantal is overschreden","2026-07-28 08:38:04","Bart Gubbels","Bart Gubbels","Bart Gubbels","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Software","Als we klanten vervolgens vragen om dit via e mail in te voeren zodat we het zelf aan kunnen maken blijken de maxima niet overschreden te zijn. 
+
+Soms gaat het wel goed, maar vaak ook niet. Ongeacht of iemand minder of meer dan 5 regels invoert.
+
+Dit doet mij vermoeden dat het geen account of regelaantal issue is.","","2026-08-05 09:22:35","s.kharim","","","",""
+"2 - Hoog","INC1991681","NL - Technischeunie.nl","Klant/Account - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9499 Croon Wolter en Dros -  Whitelisten for using PunchOut in iFrame on Spark","2026-10-19 10:02:01","Martin Manhave","Martin Manhave","Martin Manhave","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","The folowing domein should be whitelisted on Spark to be able to have the PunchOut opening in an i-Frame:
+https://vhtholb1.sap.croonwolterendros.nl
+in general : *.croonwolterendros.nl should be whitelisted for i-Frames on Spark.
+
+The  errormessage the get shows all whitelisted domeins and Prysmiangroup.com is not on it. (see picture)
+
+Also see SPO-8329 for simular actions","","2026-10-19 14:06:06","a.bekdur","","","",""
+"2 - Hoog","INC1935678","NL - Technischeunie.nl","Klant/Account - Overige","In afwachting","Interne derde partij","Kamiel Habets","[SPO-8345] Klant 3920683 kan abonnement voor serviceberichten niet beheren ondanks aangepaste autorisatie","2026-09-15 14:18:20","Cas Brienen","Cas Brienen","Cas Brienen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Voor klant 3920683 (Hendriks) - gebruiker Jeanine Sieliakus is de autorisatie voor Serviceberichten aangepast zodat conditie- en servicebestanden via de Technische Unie-website kunnen worden aangevraagd.
+
+Gebruiker Jeanine Sieliakus ervaart echter meerdere problemen:
+
+Bij het openen van Serviceberichten verschijnt een 403-foutmelding:
+""Je bent niet geautoriseerd om deze pagina te bekijken.""
+Bij het aanmaken of wijzigen van een abonnement voor ict@hendriksmaakthet.nl verschijnt de melding:
+""Er bestaat al een abonnee met dit e-mailadres.""
+Hierdoor kan het abonnement niet worden beheerd of opnieuw worden ingesteld.
+Daarnaast is gecontroleerd in de Associate Portal, maar ook daar zijn geen actieve serviceberichten of abonnementen zichtbaar voor deze gebruiker.
+
+Volgens de klant loopt er nog een oud automatisch e-mailabonnement voor ICC-bestanden. De klant ontvangt hierbij bovendien niet het gewenste importformaat en wil daarom dat het oude abonnement wordt beëindigd.
+
+Gewenste actie:
+Controleren welke abonnementen actief staan voor ict@hendriksmaakthet.nl.
+Controleren waarom het systeem meldt dat het e-mailadres al bestaat, terwijl het abonnement niet zichtbaar of beheerbaar is.
+Controleren waarom gebruiker Jeanine Sieliakus een 403-autorisatiefout krijgt bij Serviceberichten.
+Onderzoeken waarom er in de Associate Portal geen serviceberichten of abonnementen zichtbaar zijn.
+Indien aanwezig het oude ICC-abonnement verwijderen of beëindigen.
+
+Klantgegevens:
+Klantnummer: 3920683
+Contactpersoon: Jeanine Sieliakus
+Abonnement/e-mailadres: ict@hendriksmaakthet.nl","","2026-10-06 10:06:33","k.habets","","","",""
+"2 - Hoog","INC1982502","NL - Technischeunie.nl","Order & Factuur - Retouren / Reparaties","In afwachting","Externe derde partij","Craig Matthew","[SPO-9433] Klant meld retouren aan maar komen niet door","2026-10-13 14:01:39","Michelle van Elst","Michelle van Elst","Michelle van Elst","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant heeft retouren aangemeld via de website. Hij krijgt hier ook een bevestiging van. Vervolgens wordt er niets opgehaald en staat bij ons in SAP ook niets van deze retouren.","","2026-10-14 14:21:57","c.matthew","","","",""
+"2 - Hoog","INC1892089","NL - Technischeunie.nl","Mobiele app - Niet kunnen inloggen","In afwachting","Probleem","Wietze Duursma","SPO-8625 Klant kan niet inloggen","2026-08-19 08:54:49","Danitsja Duijndam","Danitsja Duijndam","Danitsja Duijndam","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant 3865359 kan niet inloggen - scherm van de app geeft aan kan nu niet inloggen probeer het later opnieuw. Klant zegt dat hij hier al even last van heeft
+Ernst Mol - +31646637483","","2026-10-19 09:17:33","w.duursma","","","",""
+"2 - Hoog","INC1960476","ZZ  OLD NL - Technischeunie.nl","Eigen Lijsten","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9181 Klant kan geen artikelen toevoegen in de openbare eigen lijsten ","2026-09-30 13:14:42","Ronald Van Der Giesen","Ronald Van Der Giesen","Ronald Van Der Giesen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant kan geen artikelen toevoegen in de openbare eigen lijsten.
+lijsten staan wel openbaar
+klant kan lijsten aanpassen maar als hij iets in een lijst wil zetten dan kan hij geen enkele lijst aanklikken.
+
+Wat gaat er niet goed?","","2026-10-12 08:39:12","a.bekdur","","","",""
+"2 - Hoog","INC1905593","NL - SAP","Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8200 Retourbonnen lopen niet goed door ","2026-08-27 12:35:56","Miriam Verhaar - Bruné","Miriam Verhaar - Bruné","Miriam Verhaar - Bruné","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Retouren lopen niet goed door richting pda van de chauffeur . Er word vanuit een retour 500 ...... een ophaalbon gecreeerd een 29 .... naar deze kom niet terecht in de pda en er is ook geen bijlage beschikbaar .  Hierdoor worden retouren nooit opgehaald.  Voorbeeld bijgevoegd . Groetjes Miriam","","2026-08-31 09:52:27","a.bekdur","","","",""
+"2 - Hoog","INC1815598","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8582 kan geen garantieverzoek indienen","2026-07-15 10:52:51","Lars Hijstek","Lars Hijstek","Lars Hijstek","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","klant kan geen garantieverzoek indienen voor zijn order. hij vult alles goed in. klikt op bevestigen en dan gebeurd er niks meer. wij hebben dit ook voor de klant geprobeerd maar bij ons werkt het ook niet. betreft klant 3357886","","2026-09-17 15:35:18","w.duursma","","","",""
+"2 - Hoog","INC1994719","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Externe derde partij","Shinod Kharim","(SPO-9534) Klant meld retour via de website maar retour niet in SAP","2026-10-20 11:36:10","Jessie Eikenaar","Jessie Eikenaar","Jessie Eikenaar","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Zie bijlage. Klant meldt retour via website maar niet in SAP. Zojuist handmatig ingeboekt met retour 500454876 omdat de klant ons bericht hierover. Kunnen jullie nazien waarom de retour niet doorkomt? Wat ik wel bijzonder vind is dat de retourreden mij niet bekend voorkomt is dat de reden waarom deze niet door is?","","2026-10-20 16:12:50","s.kharim","","","",""
+"2 - Hoog","INC1780725","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Probleem","Wietze Duursma","(SPO-8203) - Retouren komen niet goed over op de nieuwe site","2026-06-30 09:01:15","Erik Van Luipen","Erik Van Luipen","Erik Van Luipen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","klant probeerd retour te maken maar als hij na 5 artikelen op door drukt dan komt de site maar met 2 artikelen.
+
+betreft klant miltro techniek klantummer 9032961","","2026-08-06 09:23:31","w.duursma","","","",""
+"2 - Hoog","INC1880182","ZZ  OLD NL - Technischeunie.nl","Account issues","In afwachting","Externe derde partij","Shinod Kharim"," ( SPO-8625) Klant 1904101 , gebruiker Jan Westemeijer, komt niet in de App","2026-08-11 14:48:32","Andjela Paunovic","Andjela Paunovic","Andjela Paunovic","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Hier is al een eerdere ticket voor aangemaakt: INC1806985 
+I.v.m. geen reactie vanuit de klant is dit afgesloten. 
+
+- Heeft nog steeds zelfde probleem
+- Heeft geprobeerd opnieuw te installeren, maar dat heeft ook niet geholpen.
+- Oude app is volgens hem 100% verwijderd
+- Foutmelding: “u kunt momenteel niet inloggen” 
+
+Hij gebruikt voor zijn wachtwoord een hoofdletter, letter en een x als speciale tekens.
+
+Zie bijlage voor een screenshot","","2026-10-14 12:58:11","s.kharim","","","",""
+"2 - Hoog","INC1946861","NL - Technischeunie.nl","Klant/Account - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8000 The customer is experiencing problems exporting lists. ","2026-09-22 13:20:47","Erik Mutsaars","Erik Mutsaars","Erik Mutsaars","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","The customer is experiencing problems exporting lists. Is this a known bug? Or does it work as expected? What is the maximum number of items the customer can export? Are there any restrictions associated with this? Can you clarify the acceptance criteria and restrictions for the user? If a customer cannot export more than a certain number of items, shouldn't we provide a clear notification? Currently, it fails constantly, and the error message indicates that I need to contact the sales department, but they do not have a solution for this either – see the attached email and the scenarios the user runs for the customer.","","2026-09-22 13:24:10","a.bekdur","","","",""
+"2 - Hoog","INC1994700","ZZ  OLD NL - Technischeunie.nl","Winkelwagen/bestellen","In afwachting","Melder","Shinod Kharim","Klant 1116458 zijn winkel wagen is steeds leeg als hij die wilt aanvullen ","2026-10-20 11:29:08","Robin Hendriks","Robin Hendriks","Robin Hendriks","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant 1116458 zijn winkel wagen is steeds leeg als hij die wilt aanvullen en 10 minuten laten is deze weer gevuld","","2026-10-20 14:16:41","s.kharim","","","",""
+"2 - Hoog","INC1877871","NL - Technischeunie.nl","Bestellen - Winkelwagen niet afronden","In afwachting","Externe derde partij","Shinod Kharim","(SPO-8460) klant kan zijn winkelwagen niet afronden 51 regels","2026-08-10 13:03:32","Robert Sjoerds","Robert Sjoerds","Priscilla Baas","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","klant 4080636 wil 51 regels bestellen, krijgt meerdere foutmeldingen zoals : We kunnen de winkelwagen momenteel niet laden. Vernieuw de pagina of neem contact op met het verkoopkantoor.
+En Oeps..... error 500","","2026-08-10 16:26:04","s.kharim","","","",""
+"2 - Hoog","INC1977337","NL - Technischeunie.nl","Order & Factuur - Overige","In afwachting","Externe derde partij","Wietze Duursma","(SPO-9493) - klant plaatst order via de site en krijgt een bevestiging alleen komt de order niet door naar sap.","2026-10-09 09:00:06","Luc Tol","Luc Tol","Luc Tol","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Goedemorgen, 
+
+Zie onderstaande bericht van Bart van de Ven van firma van de ven Elektro en Regeltechniek (8839078).
+
+""Goedemorgen,
+
+Ik heb gisteren meerdere keren spullen besteld via de website. Na iedere bestelling krijg ik op de site de bevestiging dat de bestelling is verwerkt, maar de artikelen blijven vervolgens in mijn winkelwagen staan.
+
+Volgens mij gaat hier iets mis. Willen jullie controleren of mijn bestellingen correct zijn verwerkt en in de gaten houden dat ze niet dubbel worden besteld, maar ook niet helemaal ontbreken?
+
+Graag hoor ik even wat de status is.""
+
+Er is gisteren maar 1 order doorgekomen met ordernummer 230987633, kunnen jullie kijken wat er mis is gegaan?
+
+Alvast bedankt!
+
+Mvg, Luc","","2026-10-21 08:43:46","w.duursma","","","",""
+"2 - Hoog","INC1906042","NL - SAP","Verkoop ","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8200 Retouren die aangemaakt worden in SAP krijgen wel een 29-nummer maar deze komt niet door in de PDA van de chauffeur, materiaal wordt niet gehaald daard","2026-08-27 15:38:48","Ronald De Gries","Ronald De Gries","Ronald De Gries","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Materiaal dat retour is gemeld in SAP wordt niet retour gehaald door de chauffeur omdat de opdracht niet in de PDA komt, dit komt veel voor de laatste dagen. Zie bijgaande emails voor meer info. Indien niet voor verkoop, dan ticket doorzetten naar afdeling die hier wel over gaat aub.","","2026-09-14 11:56:54","a.bekdur","","","",""
+"2 - Hoog","INC1865576","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Externe derde partij","Craig Matthew","[SPO-8824] Changes in existing orders (amount/date) are confirmed in SPARK, but NOT visible in SAP and new SPO-8824","2026-07-31 11:27:53","Carl Van Schagen","Carl Van Schagen","Carl Van Schagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Yesterday 17 hrs:
+Log in as user Ton Bergs.: 9603820
+Ordernummer: 229968437
+This customer is BUYING OP REKENING and has 2 Regular products in his order that he wants to Change -> delete.
+Via Change delivery a calander is shown, and the 2 orderlines are thrown away.
+BLUE label Message at PAKBON is changed from BESTELLING GEPLAATST to WIJZIGING IN BEHANDELING.
+Nothing happens, no change is created in SAP.
+SAP doesn't receive a change from SPARK CX (confirmed by SAP team)
+(order is manuallly changed in SAP)
+
+reproduced this morning wth same custmer, order: 229968437","","2026-09-04 09:02:00","c.matthew","","","",""
+"2 - Hoog","INC1757895","NL - Technischeunie.nl","Order & Factuur - Retouren / Reparaties","In afwachting","Probleem","Arslan Bekdur","SPO-8203 Bij aanmaken retouren verschijnt foutmelding","2026-06-23 11:19:04","Francois Devriesere","Francois Devriesere","Francois Devriesere","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Bij aanmaken retouren verschijnt foutmelding bij klant 8752354 gebruiker Wouter Leuris","","2026-07-06 11:56:42","a.bekdur","","","",""
+"2 - Hoog","INC1989357","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Externe derde partij","Craig Matthew","[SPO-9483] Betreft klant 2805711, instellingen van de site worden steeds terug gezet en klant wordt er helemaal gek van.","2026-10-16 09:36:04","Ronald De Gries","Ronald De Gries","Ronald De Gries","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant wil nu een retour invoeren en deze staat wederom om retourbrengen i.p.v. retour halen op de locatie. Dit is al meermaals aangepast maar springt steeds weer terug.","","2026-10-16 12:21:01","c.matthew","","","",""
+"2 - Hoog","INC1994456","NL - Technischeunie.nl","Bestellen - Winkelwagen niet afronden","In uitvoering","","Shinod Kharim","de klant krijgt bij het afronden een dansend beeldscherm ik zit er nu in en bij mij doet ie het ook","2026-10-20 09:24:46","Sarah Hermans","Sarah Hermans","Sarah Hermans","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","de klant krijgt bij het afronden een dansend beeldscherm ik zit er nu in en bij mij doet ie het ook","","2026-10-20 09:54:06","s.hermans","","","",""
+"2 - Hoog","INC1984605","NL-TU_ OLD Technische Unie App","Winkelwagen/bestellen","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9245 Levering blijft open staan in APP - wel afgesloten in SAP","2026-10-14 09:29:58","Cas Brienen","Cas Brienen","Cas Brienen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","In de app van klant 9047704 blijft er een levering open staan van order 228943297 terwijl deze order compleet is afgehandeld.","","2026-10-14 12:32:31","a.bekdur","","","",""
+"2 - Hoog","INC1935186","NL - Technischeunie.nl","Order & Factuur - Retouren / Reparaties","In afwachting","Externe derde partij","Wietze Duursma","(SPO-8982) - Retouren blijft lastig.","2026-09-15 09:37:57","Janjaap Van De Wetering","Janjaap Van De Wetering","Janjaap Van De Wetering","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Als Niek een retour wilt aanmelden kan hij wel een artikel aanvinken en reden invullen, klikt hij op ""bevestigen"" dan wordt hij terug gestuurd naar het beginscherm. Hierdoor kan hij zelf geen retour aanmaken.
+Klantnummer 1010008, Niek Oude Nijhuis.","","2026-09-15 11:02:07","w.duursma","","","",""
+"2 - Hoog","INC1981926","ZZ  OLD NL - Technischeunie.nl","Klant gebruikers account","In afwachting","Melder","Shinod Kharim","bestellen website ","2026-10-13 10:20:18","Stefan van de Graaf","Stefan van de Graaf","Stefan van de Graaf","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","klant  aquabouw 9011524 jim van daal wordt vanuit leveren gelijk doorgestuurd bestelling bevestigd hij slaat referentie en betalingen gelijk binnen 1 seconden over","","2026-10-13 11:58:40","s.kharim","","","",""
+"3 - Gemiddeld","INC1970404","NL - Technischeunie.nl","Overige - Productverbeteringen","In afwachting","Externe derde partij","Shinod Kharim","(SPO-9294) Dubbele verwachte levering notatie in track and trace pad","2026-10-06 08:56:47","Erik Mutsaars","Erik Mutsaars","Erik Mutsaars","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Dubbele verwachte levering notatie in track and trace pad - Zie afbeelding
+06-10-2026-06-10-2026 = Verwachte levertijd notatie","","2026-10-06 09:26:59","s.kharim","","","",""
+"3 - Gemiddeld","INC1867639","NL - Technischeunie.nl","Order & Factuur - Factuur betaald maar niet verwerkt","In afwachting","Externe derde partij","Kamiel Habets","[SPO-8471] Factuur betaald, maar in webshop Facturen dashboard: IN BEHANDLEING","2026-08-03 10:37:07","Carl Van Schagen","Carl Van Schagen","Carl Van Schagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Deze klant 9062192, jeannette@jx4.nl
+
+Er blijft een factuur nummer 639566341 hangen in jullie systeem. deze heb ik via jullie dashboard betaald maar blijft staan op ""in behandeling in de webshop facturen overzichtpagina
+
+account_id: 9062192
+branch_name: Leiden","","2026-08-19 10:23:40","k.habets","","","",""
+"3 - Gemiddeld","INC1997109","NL - Technischeunie.nl","Bestellen - Winkelwagen niet afronden","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9550 klant kan zijn orders niet afhandelen op de site.","2026-10-21 11:39:56","Luc Tol","Luc Tol","Luc Tol","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Toine van Sleeuwen (Euroship Services BV (9010653)) kan zijn orders niet afhandelen op de site.
+Zodra hij wilt betalen (Ideal) blijft de site eindeloos draaien. 
+
+Kunnen jullie kijken waar dit mis gaat?","","2026-10-21 13:32:49","a.bekdur","","","",""
+"3 - Gemiddeld","INC1933163","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8650 krijgt een wit scherm met het doordrukken van een order op de site","2026-09-14 13:29:40","Luc Tol","Luc Tol","Brooke Van Riel","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Goedemiddag,
+
+Rob Daems (R&J installatie (3644184)) krijgt telkens een wit scherm als hij een order probeert te plaatsen, heeft hij zijn computer al opnieuw opgestart en opnieuw ingelogd op de site, zie ook video in de bijlage. 
+
+Hebben  jij enig idee waaraan dit kan liggen?","","2026-09-14 14:01:46","a.bekdur","","","",""
+"3 - Gemiddeld","INC1963286","NL - Technischeunie.nl","Order & Factuur - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9245   order 228207483 of custmer 2234649 is received but still open in orderoverview","2026-10-01 15:35:54","Carl Van Schagen","Carl Van Schagen","Carl Van Schagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","PLease change order to DELIVERED","","2026-10-02 09:30:01","a.bekdur","","","",""
+"3 - Gemiddeld","INC1929303","NL - Technischeunie.nl","Order & Factuur - Retouren / Reparaties","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8203 Debiteur 2727857, heeft retour van 17 regels gemaakt, krijgt error","2026-09-10 14:53:40","Simone Weggeman","Simone Weggeman","Simone Weggeman","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Er is geen mogelijkheid dat de klant kan zien wat de error veroorzaakt? Hij zit vast in het formulier. 
+Hoe kunnen we dit oplossen?
+Ik kan de klant niet verkopen het nogmaals te proberen, want er is geen garantie dat hij niet weer vastloopt.","","2026-09-25 14:09:05","t.van.doorninck","","","",""
+"3 - Gemiddeld","INC1997686","NL - Technischeunie.nl","Order & Factuur - Kan order niet vinden","In uitvoering","","Kamiel Habets","231217741 order niet te vinden onder het account van de klant","2026-10-21 15:47:22","Jessie Eikenaar","Jessie Eikenaar","Jessie Eikenaar","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant kan de order niet vinden terwijl het wel in het systeem staat.","","2026-10-21 17:09:12","k.habets","","","",""
+"3 - Gemiddeld","INC1742348","NL-TU_ OLD Technische Unie App","Winkelwagen/bestellen","In afwachting","Interne derde partij","Arslan Bekdur","STI-6504 probleem met app","2026-06-12 16:01:27","Randy Van Driel","Randy Van Driel","Randy Van Driel","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","2 klanten hebben problemen met de nieuwe app, zodra ze gaan scannen in winkel en dan materiaal zenden naar balie (s
+ap) dan blijft het winkelmandje vol, en als je deze verwijderd worden de artikelen nogmaals besteld? Het gaat om de 
+volgende klanten 2927663 e-mail edwin@hubertechniek.nl en 2937415 jeroen@wf-elektra.nl","","2026-08-12 16:16:27","k.habets","","","",""
+"3 - Gemiddeld","INC1900915","NL - Technischeunie.nl","Mobiele app - Niet kunnen inloggen","In afwachting","Interne derde partij","Shinod Kharim","Klant wilt graag bestellen via de app","2026-08-25 09:25:56","Janjaap Van De Wetering","Janjaap Van De Wetering","Janjaap Van De Wetering","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Goedemorgen, klantnummer 1944073, Mike Kamps wilt graag bestellen via de app.
+Na het wachtwoord wijzigen etc. lukt het nog steeds niet om in te loggen.
+Dit is al 2 weken.
+
+Telefoon: iPhone 16 pro
+iOs versie: 26.5.2","","2026-08-25 09:39:19","s.kharim","","","",""
+"3 - Gemiddeld","INC1978263","NL - Technischeunie.nl","Klant/Account - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9372  custimer 5029921 is unable to create user for erik.vander.helm@opple.com","2026-10-09 16:15:16","Carl Van Schagen","Carl Van Schagen","Carl Van Schagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","also not possible via Generic User...","","2026-10-09 17:16:46","a.bekdur","","","",""
+"3 - Gemiddeld","INC1991884","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Externe derde partij","Wietze Duursma","(SPO-9516) - Afhaal adres is niet te zien in het overzicht van de ingediende winkelwagens. ","2026-10-19 11:51:47","Aaron Bieleveld","Aaron Bieleveld","Aaron Bieleveld","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Afhaal adres is niet te zien in het overzicht van de ingediende winkelwagens.","","2026-10-20 08:46:32","w.duursma","","","",""
+"3 - Gemiddeld","INC1881620","ZZ  OLD NL - Technischeunie.nl","Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8737 lijsten op de app hebben andere indeling dan op de site","2026-08-12 10:13:14","Erik Van Luipen","Erik Van Luipen","Erik Van Luipen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Software","Klant heeft diverse lijsten op de website gemaakt in volgorde van monteren. Als hij de lijst opent in de nieuwe app dan is de volgorde veranderd en staat het door elkaar.","","2026-08-17 13:03:56","a.bekdur","","","",""
+"3 - Gemiddeld","INC1989538","ZZ  OLD NL - Technischeunie.nl","Adres wijziging(en)","In afwachting","Externe derde partij","Arslan Bekdur","Klant heeft zelf een adres aangemaakt maar deze blijft in behandeling staan en kan deze niet meer verwijderen.","2026-10-16 11:24:13","Ronald De Gries","Ronald De Gries","Ronald De Gries","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Graag dit adres verwijderen van die site, ik heb zelf in SAP het juist adres opgevoerd.","","2026-10-16 12:24:21","a.bekdur","","","",""
+"3 - Gemiddeld","INC1838978","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Probleem","Kamiel Habets","(SPO-8203) Retour lukt niet","2026-07-22 09:32:34","René Dijkgraaf","René Dijkgraaf","SA_SparkMonitoring SA_SparkMonitoring","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant 2312080, onder naam Patrick Jansen krijgt een foutmelding als hij een retour wil doorzetten.
+Kunt u meekijken waarom deze foutmelding krijgt?","","2026-08-19 13:26:31","a.bekdur","","","",""
+"3 - Gemiddeld","INC1065522","NL-TU_Algemene registratie","Algemene registratie","In afwachting","Externe derde partij","Ajith Padmanabhan","KSP - Server Connection Problem","2025-03-19 13:21:23","Daniël Lith","Daniël Lith","Daniël Lith","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Software","KSP vertoont diverse keren per dag een server connection problem.  Hopelijk kan dit snel worden opgelost aangezien het verstorend werkt.","","2026-06-15 10:08:57","h.hoogland","","","",""
+"3 - Gemiddeld","INC1820116","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Externe derde partij","Shinod Kharim","(SPO-8477) Case zonder klachtomschrijving  = een verplicht veld op de website ","2026-07-17 10:04:37","Joyce Gruters - van Herp","Joyce Gruters - van Herp","Joyce Gruters - van Herp","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Wij ontvangen vandaag een garantie cases zonder klachtomschrijving erin. Het gaat nu nog om 1 geval , maar omdat het een verplicht veld is willen wij jullie toch vragen om te onderzoeken - CAS-91258-J4V2M1","","2026-08-24 12:17:09","s.kharim","","","",""
+"3 - Gemiddeld","INC1879671","ZZ  OLD NL - Technischeunie.nl","Inloggen","In afwachting","Externe derde partij","Shinod Kharim","(SPO-8625) 9043597 Blanco Electrotechniek kan niet in de app/ ja, hij gebruikt al de nieuwe app","2026-08-11 10:19:11","Romy Kolmsberg","Romy Kolmsberg","Romy Kolmsberg","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Meneer kan niet inloggen in de tu app. Hij gebruikt de nieuwe app, maar de app geeft aan 'inloggen lukt niet, probeer later opnieuw.'","","2026-08-13 14:28:30","s.kharim","","","",""
+"3 - Gemiddeld","INC1877784","NL - Technischeunie.nl","Klant/Account - Overige","In afwachting","Externe derde partij","Shinod Kharim","(SPO-8690) Subuser's authentication settings impossible to adjust","2026-08-10 11:46:11","Carl Van Schagen","Carl Van Schagen","Carl Van Schagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","For subuser h.tiben@dierenbos.nl (Vrijetijdspark Dierenbos Exploitatie, cust number 3938164) its impossibel to adjust het authentication settings. Not for me via the AP, not for his manager directly. I changed settings (as Generic user of BEHEERDER), but when I opened the Associate portal again on the name of h.tiben, all setiings disappeared again..? See images","","2026-08-11 14:13:31","s.kharim","","","",""
+"3 - Gemiddeld","INC1869946","NL - Technischeunie.nl","Mobiele app - Niet kunnen inloggen","In afwachting","Externe derde partij","Shinod Kharim","(SPO-8625)  Klant kan al 3 weken niet inloggen.","2026-08-04 11:03:28","Jorge Botero Hernández","Jorge Botero Hernández","Jorge Botero Hernández","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant heeft de juiste app, kan inloggen op de nieuwe website. Alleen bij het inloggen in de app krijgt hij steeds de foutmelding u kont op het moment niet inloggen probeer het later nog eens.","","2026-08-13 14:30:52","s.kharim","","","",""
+"3 - Gemiddeld","INC1984516","ZZ  OLD NL - Technischeunie.nl","Offertes/ Orders/ facturen","In afwachting","Externe derde partij","Masood Jan","SPO-9431 Klant heeft order betaald via winkelwagen maar order is niet doorgekomen klantnummer: 9027439 Lieshout Service B.V.","2026-10-14 08:50:52","Vitória Boele","Vitória Boele","Vitória Boele","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","bericht klant: Zoals je ziet heb ik betaald. 
+Bij de betaling heb ik een winkelwagen referentie. Die komt overeen met de winkelwagen die ik dacht betaald te hebben. 
+Nu is het niet geleverd en heb ik wel betaald maar lijkt het alsof dat niet gebeurd is. 
+
+Order is niet door gekomen, zie alle bijlagen die de klant mee stuurt. Winkelwagen code is het zelfde als de betaal referentie van de klant.","","2026-10-21 16:23:00","a.bekdur","","","",""
+"3 - Gemiddeld","INC1995675","ZZ  OLD NL - Technischeunie.nl","Winkelwagen/bestellen","In afwachting","Externe derde partij","Wietze Duursma","(SPO-9562) - Website order komt niet in SAP","2026-10-20 16:54:59","Ron Roeten","Ron Roeten","Ron Roeten","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant 9037635 heeft online een bestelling geplaats. via Ideal betaald maar de order is niet in ASP gekomen.
+Afdeling KAS heeft bevestigd dat de betaling binnen is. Klant kan de winkelwagen ook niet meer openen. Corrupt ??
+1. Kan de winkelwagen alsnog naar een SAP order geconverteerd worden?
+2. Kan ik handmatig een order in SAP zetten en kan de online winkelwagen door jullie verwijderd worden? 
+3. Dient KAS de betaling terug te storten zodat de klant opnieuw kan bestellen? Dan dient alsnog de corrupte winkelwagen uit zijn online omgeving verwijderd te worden.
+Graag jullie reactie.","","2026-10-22 09:15:19","w.duursma","","","",""
+"3 - Gemiddeld","INC1870700","ZZ  OLD NL - Technischeunie.nl","Winkelwagen/bestellen","In afwachting","Externe derde partij","Wietze Duursma","(SPO-8000) - Exporteren bestellijsten","2026-08-04 16:04:41","Patrick Van Loon","Patrick Van Loon","Patrick Van Loon","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Een klant wil zijn bestellijst exporteren maar loopt hierbij tegen een foutmelding aan, terwijl we wel de rechten hebben verstrekt. Heeft iemand een idee hoe dit op te lossen?","","2026-08-04 16:21:22","m.pessers","","","",""
+"3 - Gemiddeld","INC1988252","NL - Verkoop Applicaties","Vendavo Deal Manager","In uitvoering","","Ajith Padmanabhan","Roel van Proosdij, Carlo van Bennekom en ik staan nog steeds op VK30 in KSP/Vendavo.","2026-10-15 16:58:43","Cherelle van Veen","Cherelle van Veen","Cherelle van Veen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Software","Roel van Proosdij, Carlo van Bennekom en ik staan nog steeds op VK30 in KSP/Vendavo. Wij en onze klanten zijn overgezet naar VK29, maar daar kunnen we niet bij. Zou dit kunnen worden aangepast?","","2026-10-21 09:20:46","cherelle.van.veen","","","",""
+"3 - Gemiddeld","INC1771293","NL - Technischeunie.nl","Overige - Open vraag","In afwachting","Probleem","Arslan Bekdur","SPO-8000 Het exporteren van Bestellijsten geeft elke keer een foutmelding","2026-06-26 14:23:25","Aaron Bieleveld","Aaron Bieleveld","Aaron Bieleveld","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Wanneer je een bestellijst wilt exporteren krijg je een foutmelding. Werkt deze functie wel of wordt hier nog aan gewerkt?
+
+Klanten exporteren nu eigen lijsten op OCP en daarbij krijgen ze de Netto prijs ook mee. Deze importeren ze weer in hun eigen ERP om zo voor een select groepje artikelen de prijs up to date te houden.","","2026-07-06 10:55:24","a.bekdur","","","",""
+"3 - Gemiddeld","INC1963034","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9240  BUG- Error message is displayed multiple times on the page","2026-10-01 14:18:27","Rik Brandhorst","Rik Brandhorst","Rik Brandhorst","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Description:
+The message “Sommige producthoeveelheden zijn in je winkelwagen bijgewerkt vanwege beschikbaarheid” is displayed multiple times on the page when product quantities are automatically adjusted due to availability.
+
+Actual result:
+The same message is shown multiple times.
+
+Expected result:
+The message should only be displayed once, even if multiple product quantities have been adjusted.
+
+Steps to reproduce:
+1. Login as associate [2845246]
+2. Subuser [Dennis Kouwen]
+3. Ope  an list - Kaailanden of Shiphost
+4. Experience multiple errormessagese222","","2026-10-01 16:42:46","a.bekdur","","","",""
+"3 - Gemiddeld","INC1955564","ZZ  OLD NL - Technischeunie.nl","Eigen Lijsten","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9176 Bestellijsten weg, ik kan ze ook niet terugvinden ","2026-09-28 11:15:49","Tamara Sonneveld","Tamara Sonneveld","Tamara Sonneveld","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Kunnen jullie kijken of de bestellijsten van 1939446 , gebruiker Wilco van Til nog ergens terug te vinden zijn? Kan ze niet terug vinden zelf. Laatste poging via jullie, anders gaat het over.","","2026-09-28 12:45:27","t.sonneveld","","","",""
+"3 - Gemiddeld","INC1876174","NL - Technischeunie.nl","Order & Factuur - Retouren / Reparaties","In afwachting","Externe derde partij","Kamiel Habets","[SPO-8582] Klant kan geen garantieverzoek aanmelden","2026-08-07 15:47:04","Jorge Botero Hernández","Jorge Botero Hernández","Jorge Botero Hernández","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Rene Lier van Sima 1438803 kan geen garantieverzoek aanmelden via de site. Ik heb het ook geprobeerd via de Generic user account maar ik kan het ook niet. Wij selecteren het artikel maar komen niet verder dan bevestigen naar de volgende stap.","","2026-10-14 10:35:17","k.habets","","","",""
+"3 - Gemiddeld","INC1988095","NL - Technischeunie.nl","Order & Factuur - Overige","In afwachting","Externe derde partij","Wietze Duursma","(SPO-9476) - Bestellingen opzoeken","2026-10-15 16:08:38","Richard Couwenberg","Richard Couwenberg","Richard Couwenberg","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Bij de filter bestellingen opzoeken op naam werkt het niet. Als een bestelling goedgekeurd moet worden door een ander dan is de originele besteller weg en kan die de bestelling niet meer terugvinden als hij bij de filter MIJN bestellingen aan heeft staan. Is het mogelijk om dit aan te passen naar: Originele besteller en dan als goedkeurder erbij?","","2026-10-16 09:39:08","w.duursma","","","",""
+"3 - Gemiddeld","INC1935216","ZZ  OLD NL - Technischeunie.nl","Offertes/ Orders/ facturen","In afwachting","Externe derde partij","Wietze Duursma","(SPO-8471) - Betalingen via website komen niet goed binnen","2026-09-15 09:55:53","Marije Tramper - Pleijte","Marije Tramper - Pleijte","Marije Tramper - Pleijte","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Gebruikersondersteuning","Klanten betalen via nieuwe website en deze betalingen worden niet verwerkt, waardoor klanten aanmaningen ontvangen.","","2026-09-15 16:24:38","w.duursma","","","",""
+"3 - Gemiddeld","INC1951650","NL - Technischeunie.nl","Klant/Account - Probleem aanmaken account","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9153 Debiteur 3028305 zijn activatiemails worden gebounced","2026-09-24 13:15:48","Simone Weggeman","Simone Weggeman","Simone Weggeman","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Vervolg INC1802970
+In het oerwoud van tickets is jullie reactie van destijds mij ontglipt.
+De activatiemail wordt nog steeds gebounced.","","2026-09-30 08:20:07","a.bekdur","","","",""
+"3 - Gemiddeld","INC1988307","NL - Technischeunie.nl","Klant/Account - Overige","In uitvoering","","Shinod Kharim","customer 3004561 has selected std delivery method but stills sees warning create std delivery adress","2026-10-15 17:22:37","Carl Van Schagen","Carl Van Schagen","Carl Van Schagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","see attachment: a standard delivery adress is selected for user rob@ and fons@...still this message is shown ""create a standard delivery adress"" Also, a new shopping cart is opende with delivery methed PICKUP...which is not what we expect??","","2026-10-16 07:22:53","s.kharim","","","",""
+"3 - Gemiddeld","INC1867744","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Externe derde partij","Wietze Duursma","(SPO-8582) - Klant kan geen garantieaanvraag doen via de website.","2026-08-03 11:27:27","Rik Van Lienden","Rik Van Lienden","Rik Van Lienden","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant kan geen garantieaanvraag doen via de website. blijft steken bij de bevestiging. Heb het zelf ook geprobeerd maar kom ook niet verder. In de bijlage een screenshot van het probleem. Betreft klant 1519503. Conctact Beau Lint- Felen","","2026-08-03 11:49:13","w.duursma","","","",""
+"3 - Gemiddeld","INC1874392","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Interne derde partij","Shinod Kharim","(SPO-8650 )customer sees flicketing screen when ordering","2026-08-06 14:44:04","Carl Van Schagen","Carl Van Schagen","Carl Van Schagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Cust number is:  3525136, user: info@devetelektro.nl I could reproduce this myself and have a video I can share","","2026-08-07 11:36:08","s.kharim","","","",""
+"3 - Gemiddeld","INC1872042","NL - Technischeunie.nl","Mobiele app - Niet kunnen inloggen","In afwachting","Externe derde partij","Shinod Kharim","(SPO-8625) kan niet inloggen op de app ","2026-08-05 10:05:58","Luc Tol","Luc Tol","Luc Tol","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Goedemorgen,
+
+Kunnen jullie meekijken met het inloggen op de app van klant 3926045.
+
+Deze klant probeert met het mailadres info@brabantslasbedrijf.nl  in te loggen op de app alleen komen zij er niet in.
+De gebruiker is al geactiveerd op de website, ook hebben zij het wachtwoord al een keer veranderd maar ze komen er nog steeds niet in.","","2026-08-13 14:29:16","s.kharim","","","",""
+"3 - Gemiddeld","INC1975583","NL - Technischeunie.nl","Order & Factuur - Retouren / Reparaties","In afwachting","Externe derde partij","Wietze Duursma","(SPO-9412) - Klant zelf retour ingeschoten buiten retourtermijn","2026-10-08 13:10:25","Janjaap Van De Wetering","Janjaap Van De Wetering","Janjaap Van De Wetering","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Zie toegevoegde mail in bijlage m.b.t. het hele verhaal, graag horen wij hoe dit heeft kunnen gebeuren en of dit opgelost gaat worden.","","2026-10-15 09:22:47","w.duursma","","","",""
+"3 - Gemiddeld","INC1877613","NL - Verkoop Applicaties","MijnTU","In afwachting","Externe derde partij","Shinod Kharim","SPO-8625 Klant 1637602, Justin Roelofs kan niet in de App komen, kan wel op de nieuwe website","2026-08-10 10:01:59","André Heiden","André Heiden","André Heiden","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Gebruikersondersteuning","Hij krijgt te zien : Je kunt momenteel niet inloggen, probeer het later opnieuw.","","2026-10-13 17:10:37","a.bekdur","","","",""
+"3 - Gemiddeld","INC1985939","NL - Technischeunie.nl","Overige - Open vraag","In afwachting","Externe derde partij","Craig Matthew","[SPO-9444] Button CHANGE PASSWORD in USEROVERVIEW page is not working","2026-10-14 17:01:54","Carl Van Schagen","Carl Van Schagen","Carl Van Schagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Button CHANGE PASSWORD in USEROVERVIEW page is not working","","2026-10-14 17:31:50","c.matthew","","","",""
+"3 - Gemiddeld","INC1912734","NL - Technischeunie.nl","Bestellen - Voorraad niet op website","In afwachting","Externe derde partij","Wietze Duursma","(SPO-8897) - Inconsistent Restock Information Between PLP and PDP","2026-09-01 12:12:55","Rik Brandhorst","Rik Brandhorst","Roel Engbers","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Inconsistent Restock Information Between PLP and PDP
+
+Description
+The expected restock date displayed on the Product Listing Page (PLP) differs from the information shown on the Product Detail Page (PDP) for the same product.
+
+Steps to reproduce
+- Search for or navigate to a product with a known restock date. (3067797)
+- Check the restock information displayed on the PLP/SRP
+- Navigate to the product detailpage and check the restock information on the PDP.
+- Compare the displayed dates.
+
+Expected result
+The PLP and PDP should display the same and consistent restock date for the product.
+
+Actual result
+The PLP and PDP display different restock dates, creating uncertainty about when the product will be available again.
+
+Customer impact
+Inconsistent availability information can confuse customers and may lead to incorrect expectations about product availability and delivery.
+
+Found on browser: Versie 151.0.7922.174 (Officiële build) (64-bits) Chrome","","2026-09-01 17:18:17","w.duursma","","","",""
+"3 - Gemiddeld","INC1749443","NL - Technischeunie.nl","Overige - Open vraag","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8000 kan eigen lijsten niet exporteren (Deb 3530375 Glenn van der Veen)","2026-06-17 14:23:38","Jantine de Heus","Jantine de Heus","Jantine de Heus","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Wanneer je de lijst probeert te exporteren, verschijnt eerst de melding dat het bestand wordt voorbereid. Na enige tijd volgt echter de melding: ""Helaas, de export is mislukt."" Zie de bijlagen voor de betreffende foutmelding.","","2026-09-01 11:04:34","j.de.heus","","","",""
+"3 - Gemiddeld","INC1989783","NL - Technischeunie.nl","Order & Factuur - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9245 Order 227962266 blijft openstaan op de website","2026-10-16 13:52:50","Evert Blaasse","Evert Blaasse","Evert Blaasse","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Order 227962266 blijft op in verwerking staan. 
+Order is al een tijd geleden geleverd.","","2026-10-19 14:14:36","a.bekdur","","","",""
+"3 - Gemiddeld","INC1883793","NL - Technischeunie.nl","Bestellen - Winkelwagen niet afronden","In afwachting","Externe derde partij","Shinod Kharim","( SPO-8650 ) Order submission screen flickering 2146751  ","2026-08-13 12:35:36","Bert Visser","Bert Visser","Bert Visser","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant ondervind problemen met het afsluiten van zijn order in de winkelwagen, na het afronden van de order begint het scherm te knipperen, ik had zijn winkelwagen overgenomen en bij mij gebeurd precies hezelfde.  er zat 1 art in de winkelwagen","","2026-08-13 12:56:38","s.kharim","","","",""
+"3 - Gemiddeld","INC1935299","ZZ  OLD NL - Technischeunie.nl","Winkelwagen/bestellen","In afwachting","Interne derde partij","Shinod Kharim","(SPO-8650) Kan niet bestellen, krijgt een knippert beeld.","2026-09-15 10:38:26","René Dijkgraaf","René Dijkgraaf","SA_SparkMonitoring SA_SparkMonitoring","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant  2325538 onder Henri Beekman wil 3x artikel 8473500 bestellen alleen bij de laatste stap kirijgt hij een knippert beeld en komt niet verder.
+Ik heb het zelf in de medewerkereportaal gedaan en krijgt dag ook.","","2026-09-15 12:05:57","s.kharim","","","",""
+"3 - Gemiddeld","INC1997485","NL - Technischeunie.nl","Order & Factuur - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9245 Volgens klant staat order 227544525 nog open op de site","2026-10-21 14:42:29","Jorge Botero Hernández","Jorge Botero Hernández","Jorge Botero Hernández","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","De klant ziet in het klantportaal dat order 227544525 nog openstaat op status bestelling geplaatst. Deze order is al in maar bezorgd en gefactureerd. Graag laten verwijderen.","","2026-10-21 14:44:44","a.bekdur","","","",""
+"3 - Gemiddeld","INC1887484","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8870  meerdere vragen van Kris van Air in Motion 8825044","2026-08-17 09:31:23","Luc Tol","Luc Tol","Luc Tol","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Goedemorgen,
+
+Zie onderstaande opmerkingen van Kris m.b.t. de eigenlijsten, zijn deze issues bekend en wordt er gewerkt aan een oplossing?
+
+""Ik merk alleen het volgende op:
+
+1. Wanneer ik de lijst ""4 - AFIM Dry 3500-R SV"" open, staat hier correct vermeld dat er 16 producten in zitten. Dit was conform de lijst op de oude website. Wanneer ik echter op ""alles selecteren"" klik en de lijst vervolgens toevoeg aan de winkelwagen, dan staan er slechts 14 producten in de winkelwagen. Wat gaat hier fout?
+
+
+2. Wanneer ik de lijst ""6 - AFIM Dry 10K-R SV-RVS"" open, staat hier correct vermeld dat er 18 producten in zitten. Dit was conform de lijst op de oude website. Wanneer ik echter op ""alles selecteren"" klik en de lijst vervolgens toevoeg aan de winkelwagen, dan staan er slechts 12 producten in de winkelwagen. Wat gaat hier fout? 
+
+De overige lijsten heb ik niet gecontroleerd, daar het lijkt dat dit een repeterend probleem is.
+
+
+3. In de bestellijsten staan de kabellengtes foutief weergegeven. Wanneer ik de bestellijst in de winkelwagen zet, is deze wel juist. Is dit op te lossen?
+
+
+
+4. Ik zie nog geen mogelijkheid om een persoonlijke beschrijving toe te voegen per producten zoals voorheen. Wordt dit nog toegevoegd en zo ja wanneer? ""
+
+Ik hoor het graag.","","2026-08-28 17:32:52","a.bekdur","","","",""
+"3 - Gemiddeld","INC1960289","NL - Technischeunie.nl","Bestellen - Overige","In afwachting","Externe derde partij","Craig Matthew","[SPO-8737] Product order differs between Web and Mobile (Listmanagement","2026-09-30 11:11:24","Rik Brandhorst","Rik Brandhorst","Rik Brandhorst","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Products within the same product list are displayed in a different order on the web platform compared with the mobile app.
+
+As a result, when a user reorders products within a list on the web, the updated order is not reflected in the mobile app.
+
+Expected behaviour
+The product order should be consistent across web and mobile. When a user changes the order of products on one platform, the same order should be reflected on the other platform after synchronization.
+
+Current behaviour
+The web and mobile app use different product ordering, meaning that changes to the product order made on the web are not reflected correctly in the mobile app.
+
+Can be reproduced on all environment: Attachments are from pre-prod on account Bosma Bronckhorst -
+Listname:  Test reorder sync web - app
+
+Listorder on web: See screenshot
+1.Osram
+2. Philips 
+3. Moel
+4. Philips
+
+Listorder on app: See video
+1. Moel
+2. Osram
+3. Philips
+4. Philips","","2026-10-05 08:49:11","c.matthew","","","",""
+"3 - Gemiddeld","INC1857105","NL - Verkoop Applicaties","Vendavo Deal Manager","In uitvoering","","Ajith Padmanabhan","KSP - deal toont geen Compensatie terwijl die wel is ingeregeld.","2026-07-27 09:45:21","Hans Hoogland","Hans Hoogland","Sven Looyestein","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Software","in overeenkomst PA-03074931-20 staat een herziene regel op HGS 192182 waar met BMC-afspraak 664298 compensatie op is ingeregeld. Echter is deze niet zichtbaar in de BB-marge berekening en/of de kolom Compensatie.","","2026-10-01 11:40:34","h.hoogland","","","",""
+"3 - Gemiddeld","INC1823163","NL - Verkoop Applicaties","Vendavo Deal Manager","In uitvoering","","Ajith Padmanabhan","PM6.5 bulk update reassign approvers","2026-07-20 13:29:01","Lianne Verhagen","Lianne Verhagen","Lianne Verhagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Software","Hi Ajith, Is there a possibility in Vendavo/KSP PM 6.5 to perform a bulk update HGS and reassign approvers from one person to another? This is related to new colleagues joining the Trading Group. Nearly 1,000 records need to be updated, so we are looking for a way to process this change in bulk rather than manually. Attached is the list with the HGS (column B) and the new approver (column F). The first 30 rows have already been updated manually.","","2026-07-21 10:35:51","l.verhagen","","","",""
+"3 - Gemiddeld","INC1997917","NL - Technischeunie.nl","Bestellen - Winkelwagen niet afronden","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9550 Kan winkelwagen niet afronden. ","2026-10-21 16:57:32","Kevin Boshuisen","Kevin Boshuisen","Kevin Boshuisen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant kan alle stappen volgen, maar nadat er op bestellen wordt gedrukt bijft hij laden en gebeurt er niks.","","2026-10-21 17:03:33","a.bekdur","","","",""
+"3 - Gemiddeld","INC1955602","NL - Technischeunie.nl","Functionaliteiten - Productdata","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9176 Lijsten zijn leeg gemaakt. ","2026-09-28 11:37:45","Evert Blaasse","Evert Blaasse","Evert Blaasse","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Bij klant  9086379 zijn plotseling de lijsten leeg. Kunnen jullie deze nog achterhalen?
+Wat zou de reden ervan kunnen zijn?
+Gaat om WC Pniel en Kamille Zevenbergen.","","2026-09-28 12:20:08","a.bekdur","","","",""
+"3 - Gemiddeld","INC1994459","ZZ  OLD NL - Technischeunie.nl","Overige","In afwachting","Externe derde partij","Wietze Duursma","(SPO-9533) - Bestelling geplaatst &  betaald,  maar niet verwerkt","2026-10-20 09:26:55","Andjela Paunovic","Andjela Paunovic","Andjela Paunovic","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Software","DEB 9091333, Brian Nicholson heeft gisteren een bestelling geplaatst met onderstaande artikelen:
+-   6x art. 1776186
+- 18x art. 3141025
+- 18x art. 7333195
+Dit heeft de klant ook direct betaald i.v.m. contant klant. Zie bijlage voor de betaling/afschrift.
+Alleen de bestelling is nergens op terug te vinden? Niet in SAP en ook niet als ik onder de klant inlog.
+Zouden jullie dit willen nakijken?","","2026-10-20 15:20:12","w.duursma","","","",""
+"4 - Laag","INC1778126","NL - Technischeunie.nl","Mobiele app - Niet kunnen inloggen","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8228 Labels on product title not separated on Mobile view","2026-06-29 11:28:59","Arslan Bekdur","Rik Brandhorst","Arslan Bekdur","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","
+Go to TU website on your mobile phone
+
+Go to Brands
+
+Find a brand, with a product on the brand page that contains 2 labels
+
+Actual result
+
+Both labels are attached to each other - it reads like one label
+
+Expected result
+
+Should be separated
+
+https://new.technischeunie.nl/catalog/nl-nl/brand/Schneider%20Electric","","2026-06-29 11:43:52","a.bekdur","","","",""
+"4 - Laag","INC1965827","NL - Technischeunie.nl","Overige - Productverbeteringen","In afwachting","Externe derde partij","Wietze Duursma","(SPO-9277) - Issue using the associate portal","2026-10-02 13:14:26","Carl Van Schagen","Carl Van Schagen","Carl Van Schagen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Every new page visit of the same customer via the associate portal,  leads to a popup asking you to confirm (see attachment), is this as expected? You should expect to see t only once when you LOGIN a specific customer??","","2026-10-05 13:43:47","w.duursma","","","",""
+"4 - Laag","INC1826685","ZZ  OLD NL - Technischeunie.nl","Eigen Lijsten","In afwachting","Probleem","Wietze Duursma","(SPO-8000) - Exporteren werkt niet","2026-07-21 14:07:29","René Dijkgraaf","René Dijkgraaf","SA_SparkMonitoring SA_SparkMonitoring","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","2312809 Tanja Sharaga werkt de exporteren knop niet, zelf ook geprobeerd op mijn eigen nummer en krijg ook een foutmelding","","2026-07-22 11:08:09","w.duursma","","","",""
+"4 - Laag","INC1962461","NL - SAP","Overige","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9245 1014901, oude bestelling","2026-10-01 10:04:11","Jop Klaassen","Jop Klaassen","Almelo Deventer Enschede Zwolle Technische Unie -","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","klant blijft op de website oude bestellingen zien, die al wel zijn afgehandeld. kunnen jullie dit opschonen. zie voorbeeld. 227384310 & 226608946.","","2026-10-02 09:29:27","a.bekdur","","","",""
+"4 - Laag","INC1947330","NL - Technischeunie.nl","Order & Factuur - Overige","In afwachting","Externe derde partij","Wietze Duursma","(SPO-9124) - voor ordernummer 229295188 blijft maar onderweg staan op de website omdat mao nummer  2452722700 op 0 gezet is","2026-09-22 15:54:10","Sarah Hermans","Sarah Hermans","Sarah Hermans","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","voor ordernummer 229295188 blijft maar onderweg staan op de website omdat mao nummer  2452722700 op 0 gezet is","","2026-09-23 09:02:15","w.duursma","","","",""
+"4 - Laag","INC1865741","NL - Technischeunie.nl","Overige - Open vraag","In afwachting","Externe derde partij","Kamiel Habets","(SPO-8345) - Debiteur 2920262 kan geen serviceberichten inrichten Error 403","2026-07-31 13:31:46","Simone Weggeman","Simone Weggeman","Simone Weggeman","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Op geen enkel profiel kunnen serviceberichten worden gemaakt. 
+Geven allemaal een Error 403","","2026-09-08 12:12:14","k.habets","","","",""
+"4 - Laag","INC1802913","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Probleem","Masood Jan","SPO-8203 Retouren  blijft draaien","2026-07-08 09:14:14","René Dijkgraaf","René Dijkgraaf","SA_SparkMonitoring SA_SparkMonitoring","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant 2317881 Patrick Leeftink  kan geen retouren invoeren Geeft ook niet aan wat voor fout het is","","2026-10-12 14:09:29","m.jan@technischeunie.com","","","",""
+"4 - Laag","INC1910757","ZZ  OLD NL - Technischeunie.nl","Eigen Lijsten","In afwachting","Externe derde partij","Craig Matthew","[SPO-8892] Eigen lijsten aanmaken","2026-08-31 15:11:24","René Dijkgraaf","René Dijkgraaf","SA_SparkMonitoring SA_SparkMonitoring","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant 2330769  Marco te Wierik wil een een eigen bestellijst aanmaken.
+Echter komt deze als eigenaar te staan onder Marco Hogeboom. Hoe kan dit?","","2026-09-04 07:37:05","c.matthew","","","",""
+"4 - Laag","INC1958687","NL - Technischeunie.nl","Order & Factuur - Retouren / Reparaties","In afwachting","Melder","Masood Jan","Error op retouren","2026-09-29 15:26:26","Hjalmar Pluymen","Hjalmar Pluymen","Hjalmar Pluymen","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Krijg een onbekende error als ik iets retour wil melden voor Viomi, video is bijgevoegd.","","2026-10-12 14:17:39","m.jan@technischeunie.com","","","",""
+"4 - Laag","INC1978380","ZZ  OLD NL - Technischeunie.nl","Retouren/ Reparaties","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8203 Foutmelding retouren","2026-10-09 16:37:42","René Dijkgraaf","René Dijkgraaf","SA_SparkMonitoring SA_SparkMonitoring","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Klant 2321123 onder naam Dave Logtenberg kan retour niet afronden en krijgt een foutmelding.
+Kun je zien hoe dit komt?  Ene keer krijg men ook 51 artikelen geselecteerd en klik je op bevestigen dan schiet hij over naar 63 st.","","2026-10-13 16:28:13","a.bekdur","","","",""
+"4 - Laag","INC1935226","NL - SAP","Verkoop ","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9050 Orders blijven staan","2026-09-15 10:03:58","Max Roozendaal","Max Roozendaal","Max Roozendaal","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","De orders blijven staan terwijl de artikelen geannuleerd zijn. Daardoor blijven de orders ook zichtbaar op de website","","2026-09-15 17:04:10","a.bekdur","","","",""
+"4 - Laag","INC1648588","NL - SAP","Verkoop ","In afwachting","Externe derde partij","Arslan Bekdur","SPO-8776 Klanten staan in OCP (website) en klantportaal inactief als Pdf factuur ontvanger (KKNB) maar in Sap staat dit nogwel.","2026-04-21 09:02:32","Frank Buiting","Frank Buiting","Frank Buiting","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","Andere","Klanten staan in OCP (website) en klantportaal inactief als Pdf factuur ontvanger (KKNB) maar in Sap staat dit nog wel.
+Hoe kan dit en graag voor de onderstaande klantnummers uitschakelen.
+3501640: 'Peppol'
+3526258: 'Peppol'
+3546405: 'Peppol'
+3501616: 'Peppol'
+3537560: 'Peppol'
+3533700: 'Peppol'
+3534237: 'Peppol'
+3546421: 'Peppol'
+3537578: 'Peppol'
+3534971: 'Peppol'
+3501657: 'Peppol'
+3546439: 'Peppol'
+3531373: 'Peppol'
+3532140: 'Peppol'
+3537586: 'Peppol'
+3536968: 'Peppol'
+3546413: 'Peppol'
+3501673: 'Peppol'
+3539756: 'Peppol'
+3551942: 'Peppol'
+3531118: 'Peppol'
+3546447: 'Peppol'
+3546397: 'Peppol'
+3502358: 'Peppol'
+3536588: 'Peppol'
+9068786: 'Peppol'","","2026-10-16 11:05:05","a.bekdur","","","",""
+"4 - Laag","INC1999013","NL - Technischeunie.nl","Mobiele app - Overige","In uitvoering","","Arslan Bekdur","Foutmelding bij opstarten","2026-10-22 08:26:23","Ad Louter","Ad Louter","Ad Louter","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","Sinds deze week verschijnt bij opstarten telkens een foutmelding, alles lijkt verder normaal te werken maar het ziet er ‘lelijk’ uit","","2026-10-22 08:27:44","a.bekdur","","","",""
+"4 - Laag","INC1984539","ZZ  OLD NL - Technischeunie.nl","Winkelwagen en Bestellen","In afwachting","Externe derde partij","Arslan Bekdur","SPO-9431 9110052 Heijden, 12-10 bestelling geplaatst maar is geen order geworden","2026-10-14 09:01:08","Bianca Bissels","Bianca Bissels","Bianca Bissels","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","De klant heeft 12-10 winkelwagennummer 7020746506363191 geplaatst maar dat is geen order geworden en wel betaald","","2026-10-14 13:37:30","a.bekdur","","","",""
+"4 - Laag","INC1802947","NL - Technischeunie.nl","Klant/Account - Overige","In afwachting","Externe derde partij","Kamiel Habets","[SPO-8345] [INT-4448] Customer administrator cannot view or configure subscribers","2026-07-08 09:43:52","Rik Brandhorst","Rik Brandhorst","Rik Brandhorst","Chapter Commerce","onwaar","Nederland","Technische Unie B.V.","","A customer with administrator permissions is unable to view or configure subscribers. Administrators are expected to have access to subscriber management, but the subscriber configuration is not visible or accessible. This prevents administrators from managing subscribers as intended.
+
+Expected result:
+A customer with administrator rights can view and configure subscribers.
+
+Actual result:
+The subscriber section is not visible or accessible, even when the user has administrator permissions.
+
+Customer number:
+Hendriks Techniek B.V.
+Klantnummer: 3920683
+User: Alexander Moelands
+a.moelands@hendriksmaakthet.nl","","2026-09-08 10:25:00","k.habets","","","",""

@@ -871,6 +871,7 @@ const incidentDialog = document.getElementById('incident-dialog');
 if (incidentDialog) {
     const dialogTitle = document.getElementById('incident-dialog-title');
     const dialogLink = document.getElementById('incident-dialog-link');
+    const dialogSpo = document.getElementById('incident-dialog-spo');
     const dialogPriority = document.getElementById('incident-dialog-priority');
     const dialogState = document.getElementById('incident-dialog-state');
     const dialogGroup = document.getElementById('incident-dialog-group');
@@ -896,6 +897,18 @@ if (incidentDialog) {
         } else {
             dialogLink.hidden = true;
         }
+
+        const spoCode = card.dataset.spoCode || '';
+        if (spoCode) {
+            dialogSpo.textContent = spoCode;
+            dialogSpo.href = `https://sonepardigital.atlassian.net/browse/${encodeURIComponent(spoCode)}`;
+            dialogSpo.hidden = false;
+        } else {
+            dialogSpo.textContent = '';
+            dialogSpo.hidden = true;
+        }
+
+        
 
         const priorityGroup = card.dataset.priorityGroup || '';
         dialogPriority.textContent = card.dataset.priority || '—';
